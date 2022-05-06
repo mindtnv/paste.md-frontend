@@ -4,6 +4,7 @@ import Fonts from "../components/Fonts";
 import ChakraLayout from "../components/layouts/ChakraLayout";
 import { Provider } from "react-redux";
 import { store } from "../app/store";
+import "../styles/index.css";
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (

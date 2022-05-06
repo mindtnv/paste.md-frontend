@@ -54,6 +54,13 @@ export const materialOceanTheme = EditorView.baseTheme({
     color: "#8F93A2 !important",
     borderColor: "#8F93A2 !important",
   },
+  ".cm-vim-panel": {
+    backgroundColor: "transparent",
+    color: "#8F93A2",
+  },
+  ".cm-panels": {
+    backgroundColor: "transparent",
+  },
 });
 
 export const materialOceanHighlight = HighlightStyle.define([
