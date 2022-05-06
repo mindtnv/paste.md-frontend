@@ -22,21 +22,29 @@ export interface EditorWindowProps extends ChakraProps {
 const AppEditorWindow = ({ editorId, maxH, ...props }: EditorWindowProps) => {
   const [activeTab, setActiveTab] = useState(0);
   const [editorFocus, setEditorFocus] = useState(true);
+  const [scrollY, setScrollY] = useState(0);
+
+  useEffect(() => {
+    if (activeTab === 1) window.scrollTo(0, scrollY);
+  }, [activeTab]);
+
   const handleTabSwitch = (e: KeyboardEvent) => {
-    console.log(e);
+    const setTab = (tab: number) => {
+      setActiveTab(tab);
+      setEditorFocus(tab === 0);
+      if (activeTab === 1) {
+        setScrollY(window.scrollY);
+      }
+    };
     if (e.ctrlKey) {
       if (e.key === "e") {
-        setActiveTab(0);
-        setEditorFocus(true);
+        setTab(0);
       } else if (e.key === "p") {
-        setActiveTab(1);
-        setEditorFocus(false);
+        setTab(1);
       } else if (e.key === "h") {
-        setActiveTab(2);
-        setEditorFocus(false);
+        setTab(2);
       } else if (e.key === "i") {
-        setActiveTab(3);
-        setEditorFocus(false);
+        setTab(3);
       } else return;
 
       e.preventDefault();
