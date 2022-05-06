@@ -1,10 +1,10 @@
-﻿import {ReactElement} from "react";
-import {ChakraProvider} from "@chakra-ui/react";
+﻿import { ReactElement } from "react";
+import { ChakraProvider } from "@chakra-ui/react";
 import theme from "../../theme";
 
 const ChakraLayout = ({
-                        children,
-                      }: {
+  children,
+}: {
   children: ReactElement | ReactElement[];
 }) => {
   return <ChakraProvider theme={theme}>{children}</ChakraProvider>;

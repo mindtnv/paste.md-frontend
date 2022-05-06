@@ -10,7 +10,7 @@ const Fonts = () => {
         font-stretch: normal;
         font-style: normal;
         src: url("/iosevka-regular.ttf") format("truetype"),
-        url("/iosevka-regular.woff2") format("woff2");
+          url("/iosevka-regular.woff2") format("woff2");
       }
 
       @font-face {
@@ -20,7 +20,7 @@ const Fonts = () => {
         font-stretch: normal;
         font-style: normal;
         src: url("/iosevka-bold.ttf") format("truetype"),
-        url("/iosevka-bold.woff2") format("woff2");
+          url("/iosevka-bold.woff2") format("woff2");
       }
 
       @font-face {
@@ -30,7 +30,7 @@ const Fonts = () => {
         font-stretch: normal;
         font-style: italic;
         src: url("/iosevka-bolditalic.ttf") format("truetype"),
-        url("/iosevka-bolditalic.woff2") format("woff2");
+          url("/iosevka-bolditalic.woff2") format("woff2");
       }
     `}</style>
   );

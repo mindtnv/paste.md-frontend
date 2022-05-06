@@ -1,6 +1,6 @@
-﻿import {EditorView, Extension} from "@uiw/react-codemirror";
-import {tags} from "@lezer/highlight";
-import {HighlightStyle, syntaxHighlighting} from "@codemirror/language";
+﻿import { EditorView, Extension } from "@uiw/react-codemirror";
+import { tags } from "@lezer/highlight";
+import { HighlightStyle, syntaxHighlighting } from "@codemirror/language";
 
 //https://material-theme.com/docs/reference/color-palette/
 export const materialOceanTheme = EditorView.baseTheme({
@@ -57,23 +57,23 @@ export const materialOceanTheme = EditorView.baseTheme({
 });
 
 export const materialOceanHighlight = HighlightStyle.define([
-  {tag: tags.keyword, color: "#C792EA"},
-  {tag: tags.operator, color: "#89DDFF"},
-  {tag: tags.typeName, color: "#f07178"},
-  {tag: tags.atom, color: "#F78C6C"},
-  {tag: tags.number, color: "#FF5370"},
-  {tag: tags.definitionKeyword, color: "#82AAFF"},
-  {tag: tags.definitionOperator, color: "#82AAFF"},
-  {tag: tags.string, color: "#C3E88D"},
-  {tag: tags.variableName, color: "#f07178"},
-  {tag: tags.tagName, color: "#FF5370"},
-  {tag: tags.meta, color: "#FFCB6B"},
-  {tag: tags.attributeName, color: "#C792EA"},
-  {tag: tags.propertyName, color: "#C792EA"},
-  {tag: tags.quote, color: "#DECB6B"},
-  {tag: tags.bracket, color: "#82AAFF"},
-  {tag: tags.link, color: "#80cbc4"},
-  {tag: tags.comment, color: "#464B5D", fontStyle: "italic"},
+  { tag: tags.keyword, color: "#C792EA" },
+  { tag: tags.operator, color: "#89DDFF" },
+  { tag: tags.typeName, color: "#f07178" },
+  { tag: tags.atom, color: "#F78C6C" },
+  { tag: tags.number, color: "#FF5370" },
+  { tag: tags.definitionKeyword, color: "#82AAFF" },
+  { tag: tags.definitionOperator, color: "#82AAFF" },
+  { tag: tags.string, color: "#C3E88D" },
+  { tag: tags.variableName, color: "#f07178" },
+  { tag: tags.tagName, color: "#FF5370" },
+  { tag: tags.meta, color: "#FFCB6B" },
+  { tag: tags.attributeName, color: "#C792EA" },
+  { tag: tags.propertyName, color: "#C792EA" },
+  { tag: tags.quote, color: "#DECB6B" },
+  { tag: tags.bracket, color: "#82AAFF" },
+  { tag: tags.link, color: "#80cbc4" },
+  { tag: tags.comment, color: "#464B5D", fontStyle: "italic" },
 ]);
 
 export const materialOcean: Extension = [
