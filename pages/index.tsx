@@ -1,5 +1,5 @@
-import type {NextPage} from "next";
-import {Button, Heading} from "@chakra-ui/react";
+import type { NextPage } from "next";
+import { Button, Heading } from "@chakra-ui/react";
 import Link from "next/link";
 
 const Home: NextPage = () => {

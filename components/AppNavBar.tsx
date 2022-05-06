@@ -1,4 +1,4 @@
-import {HamburgerIcon} from "@chakra-ui/icons";
+import { HamburgerIcon } from "@chakra-ui/icons";
 import {
   Box,
   Button,
@@ -22,23 +22,23 @@ const AppNavBar = () => {
       px={3}
       py={3}
       bg={useColorModeValue("#ffffff60", "#1D2234")}
-      css={{backdropFilter: "blur(8px)"}}
+      css={{ backdropFilter: "blur(8px)" }}
       zIndex={10}
     >
       <Container maxW="container.xl">
         <Flex justify="space-between">
-          <AppNavBarLogo/>
-          <HStack spacing={7} display={{base: "none", sm: "flex"}}>
+          <AppNavBarLogo />
+          <HStack spacing={7} display={{ base: "none", sm: "flex" }}>
             <AppNavBarLink href="/api">
               <Button colorScheme="orange">API</Button>
             </AppNavBarLink>
           </HStack>
 
-          <Box display={{base: "inline-block", sm: "none"}}>
+          <Box display={{ base: "inline-block", sm: "none" }}>
             <Menu isLazy id="navbar-menu">
               <MenuButton
                 as={IconButton}
-                icon={<HamburgerIcon/>}
+                icon={<HamburgerIcon />}
                 variant="outline"
               />
               <MenuList></MenuList>
