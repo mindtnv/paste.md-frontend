@@ -1,18 +1,16 @@
 ﻿import { ChakraProps } from "@chakra-ui/react";
 import Editor from "./Editor";
 import { useAppDispatch, useAppSelector } from "../app/hooks/storeHooks";
-import { useEffect, useState } from "react";
-import { loadFromLocalstorage } from "../app/settingsSlice";
+import { useEffect } from "react";
+import { loadDocumentFromLocalstorage } from "../app/documentSlice";
 
 export interface VimEditorProps extends ChakraProps {
-  editorId: string;
   onChange?: (value: string) => void;
   onKeyDown?: (event: KeyboardEvent) => void;
   autoFocus: boolean;
 }
 
 const VimEditor = ({
-  editorId,
   onKeyDown,
   onChange,
   autoFocus,
@@ -22,14 +20,13 @@ const VimEditor = ({
   const dispatch = useAppDispatch();
 
   useEffect(() => {
-    dispatch(loadFromLocalstorage(editorId));
-  }, [dispatch, editorId]);
+    dispatch(loadDocumentFromLocalstorage());
+  }, [dispatch]);
 
   return (
     <>
       <Editor
         vimMode={isVimMode}
-        editorId={editorId}
         autoFocus={autoFocus}
         onKeyDown={(event) => {
           if (onKeyDown) onKeyDown(event);

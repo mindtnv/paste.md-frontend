@@ -1,4 +1,4 @@
-﻿import { useEffect } from "react";
+﻿import { useEffect, useRef } from "react";
 
 export interface VimNavigationOptions {
   scrollSpeed: number;
@@ -47,14 +47,17 @@ const vimNavigation = (target: HTMLElement, options: VimNavigationOptions) => {
   ];
 };
 
-export const useVimNavigation = (
-  target: HTMLElement,
-  options: VimNavigationOptions
-) => {
+export const useVimNavigation = (options: VimNavigationOptions) => {
+  const ref = useRef<HTMLElement>(null);
   useEffect(() => {
-    if (target !== null) {
-      const clean = vimNavigation(target, options);
+    if (ref !== null && ref.current !== null) ref.current.focus();
+  });
+  useEffect(() => {
+    console.log(ref);
+    if (ref !== null) {
+      const clean = vimNavigation(ref.current!, options);
       return () => clean.forEach((c) => c());
     }
-  });
+  }, [ref]);
+  return ref;
 };

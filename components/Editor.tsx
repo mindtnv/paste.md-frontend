@@ -11,7 +11,10 @@ import { useEffect, useState } from "react";
 import { materialOcean } from "../theme/editor/materialOcean";
 import { LanguageDescription } from "@codemirror/language";
 import { useAppDispatch, useAppSelector } from "../app/hooks/storeHooks";
-import { loadFromLocalstorage, set } from "../app/documentSlice";
+import {
+  loadDocumentFromLocalstorage,
+  setDocument,
+} from "../app/documentSlice";
 
 const editorTheme = EditorView.theme(
   {
@@ -70,7 +73,6 @@ const createBaseExtensions = () => {
 
 export interface EditorProps extends ChakraProps {
   vimMode: boolean;
-  editorId: string;
   autoFocus: boolean;
   onChange?: (value: string) => void;
   onKeyDown?: (event: KeyboardEvent) => void;
@@ -82,7 +84,6 @@ const Editor = ({
   vimMode,
   onChange,
   maxH,
-  editorId,
   onKeyDown,
   onUpdate,
   autoFocus,
@@ -103,22 +104,21 @@ const Editor = ({
 
   useEffect(() => {
     if (localDocument === null) {
-      dispatch(loadFromLocalstorage(editorId));
+      dispatch(loadDocumentFromLocalstorage());
       return;
     }
 
     const timeout = setTimeout(() => {
       dispatch(
-        set({
+        setDocument({
           document: localDocument,
-          editorId: editorId,
         })
       );
     }, 400);
     return () => {
       clearTimeout(timeout);
     };
-  }, [localDocument, dispatch, editorId]);
+  }, [localDocument, dispatch]);
 
   useEffect(() => {
     setLocalDocument(document);

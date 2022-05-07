@@ -2,11 +2,11 @@
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import { documentViewerComponents } from "../app/documentViewerComponents";
-import { useEffect, useRef } from "react";
 import {
   useVimNavigation,
   VimNavigationOptions,
 } from "../app/hooks/useVimNavigation";
+import NoSsr from "./NoSsr";
 
 export interface DocumentViewerProps extends ChakraProps {
   document: string;
@@ -17,29 +17,28 @@ const vimNavigationOptions: VimNavigationOptions = {
 };
 
 const DocumentViewer = ({ document, ...props }: DocumentViewerProps) => {
-  const ref = useRef<any>(null);
-  useEffect(() => {
-    ref.current.focus();
-  });
-  useVimNavigation(ref.current, vimNavigationOptions);
+  const ref = useVimNavigation(vimNavigationOptions);
 
   return (
     <Box
       _focusVisible={{ outline: "none" }}
-      tabIndex={-1}
-      ref={ref}
       bgColor="#0F111A"
+      tabIndex={-1}
+      // @ts-ignore
+      ref={ref}
       fontSize={["md", "xl"]}
       color="#BCBFC7"
       borderRadius={5}
       {...props}
     >
-      <ReactMarkdown
-        rehypePlugins={[remarkGfm]}
-        components={documentViewerComponents}
-      >
-        {document}
-      </ReactMarkdown>
+      <NoSsr>
+        <ReactMarkdown
+          rehypePlugins={[remarkGfm]}
+          components={documentViewerComponents}
+        >
+          {document}
+        </ReactMarkdown>
+      </NoSsr>
     </Box>
   );
 };

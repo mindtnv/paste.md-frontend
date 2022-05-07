@@ -10,7 +10,7 @@ const AppLayout = ({ children, ...props }: AppLayoutProps) => {
   return (
     <Box as="main" minH="100vh" position="relative">
       <AppNavBar />
-      <Container py={5} maxW="container.2xl" {...props}>
+      <Container py={5} paddingInline={[0, 4]} maxW="container.2xl" {...props}>
         {children}
       </Container>
     </Box>

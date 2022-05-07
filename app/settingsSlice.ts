@@ -11,28 +11,26 @@ const initialState: SettingsSliceState = {
 };
 
 export interface SetActionPayload {
-  editorId: string;
   value: boolean;
 }
+
+const localStorageKey = "isVimMode";
 
 const settingsSlice = createSlice({
   name: "settings",
   initialState,
   reducers: {
     set: (state, { payload }: PayloadAction<SetActionPayload>) => {
-      localStorage.setItem(
-        isVimModeStorageKey(payload.editorId),
-        payload.value.toString()
-      );
+      localStorage.setItem(localStorageKey, payload.value.toString());
       state.isVimMode = payload.value;
     },
-    loadFromLocalstorage: (state, { payload }: PayloadAction<string>) => {
+    loadSettingsFromLocalstorage: (state) => {
       state.isVimMode =
-        localStorage.getItem(isVimModeStorageKey(payload)) === "true" ??
+        localStorage.getItem(localStorageKey) === "true" ??
         initialState.isVimMode;
     },
   },
 });
 
-export const { loadFromLocalstorage, set } = settingsSlice.actions;
+export const { loadSettingsFromLocalstorage, set } = settingsSlice.actions;
 export default settingsSlice.reducer;

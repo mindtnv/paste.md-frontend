@@ -2,16 +2,11 @@
 import { useAppSelector } from "../app/hooks/storeHooks";
 import DocumentViewer from "./DocumentViewer";
 
-export interface EditorDocumentViewerProps extends ChakraProps {
-  editorId: string;
-}
+export interface EditorDocumentViewerProps extends ChakraProps {}
 
-const EditorDocumentViewer = ({
-  editorId,
-  ...props
-}: EditorDocumentViewerProps) => {
+const EditorDocumentViewer = ({ ...props }: EditorDocumentViewerProps) => {
   const document = useAppSelector((state) => state.document.document);
-  return <DocumentViewer document={document} {...props} />;
+  return <DocumentViewer document={document ?? ""} {...props} />;
 };
 
 export default EditorDocumentViewer;

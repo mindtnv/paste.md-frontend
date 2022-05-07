@@ -1,6 +1,6 @@
 const fonts = {
-  heading: "'Nunito', sans-serif;",
-  body: "'Nunito', sans-serif;",
+  heading: "'Montserrat', sans-serif;",
+  body: "'Raleway', sans-serif;",
 };
 
 export default fonts;
