@@ -1,6 +1,6 @@
 ﻿import React, { useEffect } from "react";
 import { ChakraProps, FormLabel, Switch } from "@chakra-ui/react";
-import { useAppDispatch, useAppSelector } from "../app/hooks";
+import { useAppDispatch, useAppSelector } from "../app/hooks/storeHooks";
 import { loadFromLocalstorage, set } from "../app/settingsSlice";
 
 export interface VimModeSwitcherProps extends ChakraProps {

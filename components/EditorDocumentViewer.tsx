@@ -1,5 +1,5 @@
 ﻿import { ChakraProps } from "@chakra-ui/react";
-import { useAppSelector } from "../app/hooks";
+import { useAppSelector } from "../app/hooks/storeHooks";
 import DocumentViewer from "./DocumentViewer";
 
 export interface EditorDocumentViewerProps extends ChakraProps {

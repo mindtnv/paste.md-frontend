@@ -10,7 +10,7 @@ import { Box, ChakraProps } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import { materialOcean } from "../theme/editor/materialOcean";
 import { LanguageDescription } from "@codemirror/language";
-import { useAppDispatch, useAppSelector } from "../app/hooks";
+import { useAppDispatch, useAppSelector } from "../app/hooks/storeHooks";
 import { loadFromLocalstorage, set } from "../app/documentSlice";
 
 const editorTheme = EditorView.theme(

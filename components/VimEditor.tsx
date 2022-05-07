@@ -1,6 +1,6 @@
 ﻿import { ChakraProps } from "@chakra-ui/react";
 import Editor from "./Editor";
-import { useAppDispatch, useAppSelector } from "../app/hooks";
+import { useAppDispatch, useAppSelector } from "../app/hooks/storeHooks";
 import { useEffect, useState } from "react";
 import { loadFromLocalstorage } from "../app/settingsSlice";
 
