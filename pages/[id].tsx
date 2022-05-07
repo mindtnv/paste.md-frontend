@@ -1,4 +1,4 @@
-﻿import { Box, Heading, Spinner } from "@chakra-ui/react";
+﻿import { Box, Heading, Skeleton } from "@chakra-ui/react";
 import { useRouter } from "next/router";
 import { useAppDispatch, useAppSelector } from "../app/hooks/storeHooks";
 import { useEffect } from "react";
@@ -21,9 +21,9 @@ const NotePage = () => {
 
   return (
     <Box>
-      {loading === "pending" || loading === "idle" ? (
-        <Spinner size="xl" color="green" emptyColor="gray.200" speed="0.65s" />
-      ) : loading === "succeeded" ? (
+      {loading === "failed" ? (
+        <Heading>404 not found</Heading>
+      ) : (
         <Box overflowX="auto">
           <Box
             maxW="container.lg"
@@ -41,18 +41,24 @@ const NotePage = () => {
             )}
             <NoteLink href={`${baseUrl}/${id}`} />
           </Box>
-          <DocumentViewer
-            document={document!}
-            minW="400px"
-            w="100%"
+          <Skeleton
+            id="viewer"
+            isLoaded={loading === "succeeded"}
+            minH="80vh"
             maxW="container.lg"
             mx="auto"
-            px={["1.2rem", "2.5rem", "4rem"]}
-            py={["1.5rem", "2rem", "3rem"]}
-          />
+          >
+            <DocumentViewer
+              document={document!}
+              minW="400px"
+              w="100%"
+              maxW="container.lg"
+              mx="auto"
+              px={["1.2rem", "2.5rem", "4rem"]}
+              py={["1.5rem", "2rem", "3rem"]}
+            />
+          </Skeleton>
         </Box>
-      ) : (
-        <Heading>404 not found</Heading>
       )}
     </Box>
   );

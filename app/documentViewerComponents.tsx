@@ -1,7 +1,9 @@
 ﻿import {
   Box,
+  Code,
   Divider,
   Heading,
+  Image,
   Link,
   OrderedList,
   Table,
@@ -31,12 +33,13 @@ const headerFabric = (headerLevel: number) => {
           as={`h${headerLevel}`}
           color="white"
           fontSize={[fontSize(headerLevel + 1), fontSize(headerLevel)]}
-          my={6}
+          my={[6, 6, 8]}
+          mt={[10, 12, 14]}
           {...props}
         >
           {children}
         </Heading>
-        {headerLevel < 3 ? <Divider mb={6} /> : <></>}
+        {headerLevel < 3 ? <Divider mb={[6, 6, 8]} /> : <></>}
       </>
     );
   }
@@ -51,9 +54,11 @@ export const documentViewerComponents: Options["components"] = {
   h4: headerFabric(4),
   h5: headerFabric(5),
   h6: headerFabric(6),
-  p: ({ children }: any) => <Text mb={4}>{children}</Text>,
-  ol: ({ children }: any) => <OrderedList mb={4}>{children}</OrderedList>,
-  ul: ({ children }: any) => <UnorderedList mb={4}>{children}</UnorderedList>,
+  p: ({ children }: any) => <Text mb={[6, 8]}>{children}</Text>,
+  ol: ({ children }: any) => <OrderedList mb={[6, 8]}>{children}</OrderedList>,
+  ul: ({ children }: any) => (
+    <UnorderedList mb={[6, 8]}>{children}</UnorderedList>
+  ),
   li: ({ children }: any) => <li>{children}</li>,
   a: ({ children, href }: any) => (
     <Link color="#80cbc4" href={href} target="_blank">
@@ -66,26 +71,29 @@ export const documentViewerComponents: Options["components"] = {
     </Box>
   ),
   code: ({ children }: any) => (
-    <Box
+    <Code
       as="code"
       fontFamily="Iosevka"
       display="inline-block"
       borderRadius={2}
+      colorScheme="red"
+      fontSize="xl"
       px={2}
-      bgColor="#FFFFFF30"
     >
       {children}
-    </Box>
+    </Code>
   ),
   pre: ({ children }: any) => (
-    <Box as="pre" mb={4}>
+    <Box mt={[-4, -4, -6]} as="pre" mb={[6, 6, 8]}>
       {children}
     </Box>
   ),
 
   table: ({ children }: any) => (
-    <TableContainer mb={6}>
-      <Table variant="simple">{children}</Table>
+    <TableContainer mb={[6, 6, 8]}>
+      <Table variant="simple" size="lg">
+        {children}
+      </Table>
     </TableContainer>
   ),
 
@@ -94,4 +102,9 @@ export const documentViewerComponents: Options["components"] = {
   tr: ({ children }: any) => <Tr>{children}</Tr>,
   th: ({ children }: any) => <Th>{children}</Th>,
   td: ({ children }: any) => <Td>{children}</Td>,
+  img: ({ children, src, alt }: any) => (
+    <Image maxW="35%" display="inline-block" src={src} alt={alt}>
+      {children}
+    </Image>
+  ),
 };

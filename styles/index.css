@@ -17,3 +17,11 @@
   outline-right: 1px solid #ffffff30;
   border-radius: 5px;
 }
+
+#viewer li p {
+  margin-bottom: 0.2rem !important;
+}
+
+#viewer p ~ ol {
+  margin-top: -1rem !important;
+}

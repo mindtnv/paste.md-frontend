@@ -53,7 +53,6 @@ export const useVimNavigation = (options: VimNavigationOptions) => {
     if (ref !== null && ref.current !== null) ref.current.focus();
   });
   useEffect(() => {
-    console.log(ref);
     if (ref !== null) {
       const clean = vimNavigation(ref.current!, options);
       return () => clean.forEach((c) => c());
