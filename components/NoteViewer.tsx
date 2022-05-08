@@ -7,16 +7,17 @@ import {
   VimNavigationOptions,
 } from "../app/hooks/useVimNavigation";
 import NoSsr from "./NoSsr";
+import { Note } from "../app/noteSlice";
 
-export interface DocumentViewerProps extends ChakraProps {
-  document: string;
+export interface NoteViewerProps extends ChakraProps {
+  note: Note;
 }
 
 const vimNavigationOptions: VimNavigationOptions = {
   scrollSpeed: 10,
 };
 
-const DocumentViewer = ({ document, ...props }: DocumentViewerProps) => {
+const NoteViewer = ({ note, ...props }: NoteViewerProps) => {
   const ref = useVimNavigation(vimNavigationOptions);
 
   return (
@@ -36,11 +37,11 @@ const DocumentViewer = ({ document, ...props }: DocumentViewerProps) => {
           rehypePlugins={[remarkGfm]}
           components={documentViewerComponents}
         >
-          {document}
+          {note.content}
         </ReactMarkdown>
       </NoSsr>
     </Box>
   );
 };
 
-export default DocumentViewer;
+export default NoteViewer;

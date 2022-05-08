@@ -8,7 +8,7 @@ const EditCode = ({ code, ...props }: EditCodeProps) => {
   const toast = useToast();
 
   return (
-    <Box textAlign="center">
+    <Box textAlign="center" {...props}>
       <Text fontSize={["md", "xl", "xl"]}>
         Your edit code:{" "}
         <Text

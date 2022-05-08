@@ -1,10 +1,10 @@
 ﻿import { configureStore } from "@reduxjs/toolkit";
-import documentReducer from "./documentSlice";
+import noteReducer from "./noteSlice";
 import settingsReducer from "./settingsSlice";
 
 export const store = configureStore({
   reducer: {
-    document: documentReducer,
+    note: noteReducer,
     settings: settingsReducer,
   },
 });

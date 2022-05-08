@@ -2,7 +2,7 @@
 import Editor from "./Editor";
 import { useAppDispatch, useAppSelector } from "../app/hooks/storeHooks";
 import { useEffect } from "react";
-import { loadDocumentFromLocalstorage } from "../app/documentSlice";
+import { loadNoteContentFromLocalstorage } from "../app/noteSlice";
 
 export interface VimEditorProps extends ChakraProps {
   onChange?: (value: string) => void;
@@ -20,7 +20,7 @@ const VimEditor = ({
   const dispatch = useAppDispatch();
 
   useEffect(() => {
-    dispatch(loadDocumentFromLocalstorage());
+    dispatch(loadNoteContentFromLocalstorage());
   }, [dispatch]);
 
   return (

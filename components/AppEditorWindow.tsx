@@ -14,11 +14,11 @@
 } from "@chakra-ui/react";
 import React, { useCallback, useEffect, useState } from "react";
 import NoSsr from "./NoSsr";
-import EditorDocumentViewer from "./EditorDocumentViewer";
+import EditorNoteViewer from "./EditorNoteViewer";
 import VimModeSwitcher from "./VimModeSwitcher";
 import VimEditor from "./VimEditor";
 import { useAppDispatch, useAppSelector } from "../app/hooks/storeHooks";
-import { saveDocument } from "../app/documentSlice";
+import { saveNote } from "../app/noteSlice";
 
 export interface EditorWindowProps extends ChakraProps {}
 
@@ -26,7 +26,7 @@ const AppEditorWindow = ({ maxH, ...props }: EditorWindowProps) => {
   const [activeTab, setActiveTab] = useState(0);
   const [editorFocus, setEditorFocus] = useState(true);
   const [scrollY, setScrollY] = useState(0);
-  const saving = useAppSelector((state) => state.document.saving);
+  const saving = useAppSelector((state) => state.note.saving);
   const dispatch = useAppDispatch();
 
   useEffect(() => {
@@ -119,7 +119,7 @@ const AppEditorWindow = ({ maxH, ...props }: EditorWindowProps) => {
                 colorScheme="green"
                 size="lg"
                 onClick={() => {
-                  dispatch(saveDocument());
+                  dispatch(saveNote());
                 }}
               >
                 {saving === "idle" ||
@@ -136,7 +136,7 @@ const AppEditorWindow = ({ maxH, ...props }: EditorWindowProps) => {
           </TabPanel>
           <TabPanel p={0} py={[0, 6]} w="100%" overflow="auto">
             <NoSsr>
-              <EditorDocumentViewer
+              <EditorNoteViewer
                 minW="400px"
                 w="100%"
                 maxW="container.lg"

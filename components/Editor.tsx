@@ -12,9 +12,9 @@ import { materialOcean } from "../theme/editor/materialOcean";
 import { LanguageDescription } from "@codemirror/language";
 import { useAppDispatch, useAppSelector } from "../app/hooks/storeHooks";
 import {
-  loadDocumentFromLocalstorage,
-  setDocument,
-} from "../app/documentSlice";
+  loadNoteContentFromLocalstorage,
+  setNoteContent,
+} from "../app/noteSlice";
 
 const editorTheme = EditorView.theme(
   {
@@ -89,10 +89,10 @@ const Editor = ({
   autoFocus,
   ...props
 }: EditorProps) => {
-  const [localDocument, setLocalDocument] = useState<string | null>(null);
-  const document = useAppSelector((state) => state.document.document);
-  const dispatch = useAppDispatch();
+  const [localNoteContent, setLocalNoteContent] = useState<string | null>(null);
+  const noteContent = useAppSelector((state) => state.note.note.content);
   const [extensions, setExtensions] = useState(createBaseExtensions());
+  const dispatch = useAppDispatch();
 
   useEffect(() => {
     if (vimMode)
@@ -103,38 +103,33 @@ const Editor = ({
   }, [vimMode]);
 
   useEffect(() => {
-    if (localDocument === null) {
-      dispatch(loadDocumentFromLocalstorage());
+    if (localNoteContent === null) {
+      dispatch(loadNoteContentFromLocalstorage());
       return;
     }
-
     const timeout = setTimeout(() => {
-      dispatch(
-        setDocument({
-          document: localDocument,
-        })
-      );
+      dispatch(setNoteContent(localNoteContent));
     }, 400);
     return () => {
       clearTimeout(timeout);
     };
-  }, [localDocument, dispatch]);
+  }, [localNoteContent, dispatch]);
 
   useEffect(() => {
-    setLocalDocument(document);
-  }, [document]);
+    setLocalNoteContent(noteContent);
+  }, [noteContent]);
 
   return (
     <Box {...props}>
       <ReactCodeMirror
-        value={localDocument ?? ""}
+        value={localNoteContent ?? ""}
         autoFocus={autoFocus}
         height={maxH as string}
         indentWithTab={true}
         extensions={extensions}
         theme={editorTheme}
         onChange={(value, viewUpdate) => {
-          setLocalDocument(value);
+          setLocalNoteContent(value);
         }}
         onKeyDown={(e: any) => {
           if (onKeyDown) onKeyDown(e);

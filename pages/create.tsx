@@ -3,22 +3,21 @@ import AppEditorWindow from "../components/AppEditorWindow";
 import { useAppDispatch, useAppSelector } from "../app/hooks/storeHooks";
 import { useEffect } from "react";
 import { useRouter } from "next/router";
-import { documentSaved } from "../app/documentSlice";
+import { noteSaved } from "../app/noteSlice";
 
 const CreatePage = () => {
-  const saving = useAppSelector((state) => state.document.saving);
-  const meta = useAppSelector((state) => state.document.meta);
+  const saving = useAppSelector((state) => state.note.saving);
+  const id = useAppSelector((state) => state.note.note.id);
+  const editCode = useAppSelector((state) => state.note.note.editCode);
   const dispatch = useAppDispatch();
   const router = useRouter();
 
   useEffect(() => {
     if (saving === "succeeded") {
-      const id = meta.id;
-      const editCode = meta.editCode;
-      dispatch(documentSaved());
+      dispatch(noteSaved());
       router.push(`/${id}?edit=${editCode}`);
     }
-  }, [meta, router, dispatch, saving]);
+  }, [id, editCode, router, dispatch, saving]);
 
   return (
     <>
