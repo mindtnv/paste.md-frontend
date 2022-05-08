@@ -118,7 +118,10 @@ const AppEditorWindow = ({ actionType, maxH, ...props }: EditorWindowProps) => {
               />
             </NoSsr>
             <HStack mt={6} justifyContent="flex-end">
-              <CreateUpdateButton actionType={actionType} />
+              <CreateUpdateButton
+                actionType={actionType}
+                onClick={() => dispatch(saveNote())}
+              />
             </HStack>
           </TabPanel>
           <TabPanel p={0} py={[0, 6]} w="100%" overflow="auto">
@@ -127,7 +130,6 @@ const AppEditorWindow = ({ actionType, maxH, ...props }: EditorWindowProps) => {
                 // @ts-ignore
                 id="viewer"
                 // @ts-ignore
-                className="md-viewer"
                 minW="400px"
                 w="100%"
                 maxW="container.lg"

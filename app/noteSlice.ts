@@ -1,7 +1,7 @@
 ﻿import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import {
+  LoadNoteArgs,
   loadNoteAsync,
-  LoadNoteParams,
   saveNoteAsync,
   updateNoteAsync,
 } from "./api/api";
@@ -12,7 +12,7 @@ export const localStorageKey = "editorNote";
 export const emptyNote: Note = {
   id: "",
   content: "",
-  title: "",
+  title: "Without title",
   editCode: "",
 };
 
@@ -35,6 +35,14 @@ const initialState: NoteSliceState = {
   saving: "idle",
 };
 
+export const getTitle = (content: string): string => {
+  const regex = /^\s*#(?!#)(.*)/g;
+  const result = regex.exec(content);
+  if (result === null) return emptyNote.title;
+
+  return result.length > 1 ? result[1].trim() : emptyNote.title;
+};
+
 export const saveNote = createAsyncThunk(
   "note/saveNote",
   async (arg, thunkAPI) => {
@@ -42,15 +50,17 @@ export const saveNote = createAsyncThunk(
     if (state.note.note === null || state.note.note.content === "")
       throw new Error();
 
-    if (state.note.note.editCode) return await updateNoteAsync(state.note.note);
+    if (state.note.note.editCode) {
+      return await updateNoteAsync(state.note.note);
+    }
 
-    return await saveNoteAsync(state.note.note.content);
+    return await saveNoteAsync(state.note.note);
   }
 );
 
 export const loadNote = createAsyncThunk(
   "note/loadNote",
-  async (args: LoadNoteParams, thunkAPI) => {
+  async (args: LoadNoteArgs, thunkAPI) => {
     const result = await loadNoteAsync(args);
     if (result === null) throw new Error();
     return result;
@@ -63,11 +73,17 @@ const noteSlice = createSlice({
   reducers: {
     setNoteContent: (state, payload: PayloadAction<string>) => {
       state.note.content = payload.payload;
+      const title = getTitle(state.note.content);
+      state.note.title = title;
       localStorage.setItem(localStorageKey, payload.payload);
     },
 
     setNote: (state, { payload }: PayloadAction<Note>) => {
       state.note = payload;
+    },
+
+    setNoteTitle: (state, { payload }: PayloadAction<string>) => {
+      state.note.title = payload;
     },
 
     noteSaved: (state) => {
@@ -116,6 +132,7 @@ export const {
   setNote,
   setNoteContent,
   noteSaved,
+  setNoteTitle,
 } = noteSlice.actions;
 
 export default noteSlice.reducer;

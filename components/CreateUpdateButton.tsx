@@ -12,10 +12,12 @@ import { useAppDispatch, useAppSelector } from "../app/hooks/storeHooks";
 
 export interface CreateUpdateButtonProps extends ChakraProps {
   actionType: "create" | "update";
+  onClick?: () => void;
 }
 
 const CreateUpdateButton = ({
   actionType,
+  onClick,
   ...props
 }: CreateUpdateButtonProps) => {
   const dispatch = useAppDispatch();
@@ -28,7 +30,7 @@ const CreateUpdateButton = ({
       variant="solid"
       size="lg"
       onClick={() => {
-        dispatch(saveNote());
+        if (onClick) onClick();
       }}
     >
       <>

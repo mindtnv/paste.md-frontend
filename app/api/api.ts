@@ -3,22 +3,23 @@
 export const apiUrl = process.env.NEXT_PUBLIC_API_URL;
 export const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
 
+export type SaveNoteArgs = Pick<Note, "title" | "content">;
 export interface SaveNoteResult extends Note {}
 
 export interface LoadNoteResult extends Note {}
 
-export interface LoadNoteParams {
+export interface LoadNoteArgs {
   id: string;
   editCode?: string;
 }
 
-export interface EditCodeValidationParams {
+export interface EditCodeValidationArgs {
   id: string;
   editCode: string;
 }
 
 export const validateEditCodeAsync = async (
-  args: EditCodeValidationParams
+  args: EditCodeValidationArgs
 ): Promise<boolean> => {
   const response = await fetch(
     `${apiUrl}/note/${args.id}?editCode=${args.editCode}`,
@@ -32,13 +33,13 @@ export const validateEditCodeAsync = async (
 };
 
 export const saveNoteAsync = async (
-  document: string
+  note: SaveNoteArgs
 ): Promise<SaveNoteResult> => {
   const response = await fetch(`${apiUrl}/note`, {
     method: "POST",
     body: JSON.stringify({
-      title: "test",
-      content: document,
+      title: note.title,
+      content: note.content,
     }),
   });
   const body = await response.json();
@@ -58,7 +59,7 @@ export const updateNoteAsync = async (note: Note) => {
 };
 
 export const loadNoteAsync = async (
-  args: LoadNoteParams
+  args: LoadNoteArgs
 ): Promise<LoadNoteResult | null> => {
   try {
     const response = await fetch(`${apiUrl}/note/${args.id}`, {

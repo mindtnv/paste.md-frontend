@@ -18,19 +18,19 @@
   border-radius: 5px;
 }
 
-.md-viewer li p {
+#viewer li p {
   margin-bottom: 0.2rem !important;
 }
 
-.md-viewer p ~ ol {
+#viewer p ~ ol {
   margin-top: -1rem !important;
 }
 
-.md-viewer li pre {
+#viewer li pre {
   margin-top: 0 !important;
 }
 
-.md-viewer blockquote p:last-of-type {
+#viewer blockquote p:last-of-type {
   margin-bottom: 0 !important;
 }
 
