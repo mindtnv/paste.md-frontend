@@ -19,10 +19,13 @@ import VimModeSwitcher from "./VimModeSwitcher";
 import VimEditor from "./VimEditor";
 import { useAppDispatch, useAppSelector } from "../app/hooks/storeHooks";
 import { saveNote } from "../app/noteSlice";
+import SaveUpdateButton from "./SaveUpdateButton";
 
-export interface EditorWindowProps extends ChakraProps {}
+export interface EditorWindowProps extends ChakraProps {
+  actionType: "create" | "update";
+}
 
-const AppEditorWindow = ({ maxH, ...props }: EditorWindowProps) => {
+const AppEditorWindow = ({ actionType, maxH, ...props }: EditorWindowProps) => {
   const [activeTab, setActiveTab] = useState(0);
   const [editorFocus, setEditorFocus] = useState(true);
   const [scrollY, setScrollY] = useState(0);
@@ -114,24 +117,7 @@ const AppEditorWindow = ({ maxH, ...props }: EditorWindowProps) => {
               />
             </NoSsr>
             <HStack mt={6} justifyContent="flex-end">
-              <Button
-                minW={["100%", 250]}
-                colorScheme="green"
-                size="lg"
-                onClick={() => {
-                  dispatch(saveNote());
-                }}
-              >
-                {saving === "idle" ||
-                saving === "failed" ||
-                saving === "succeeded" ? (
-                  "Create new paste"
-                ) : (
-                  <Center>
-                    <Spinner />
-                  </Center>
-                )}
-              </Button>
+              <SaveUpdateButton actionType={actionType} />
             </HStack>
           </TabPanel>
           <TabPanel p={0} py={[0, 6]} w="100%" overflow="auto">

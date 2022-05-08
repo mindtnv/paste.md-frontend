@@ -1,5 +1,10 @@
 ﻿import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { loadNoteAsync, saveNoteAsync } from "./api/api";
+import {
+  loadNoteAsync,
+  LoadNoteParams,
+  saveNoteAsync,
+  updateNoteAsync,
+} from "./api/api";
 import { RootState } from "./store";
 
 export const localStorageKey = "editorNote";
@@ -37,14 +42,16 @@ export const saveNote = createAsyncThunk(
     if (state.note.note === null || state.note.note.content === "")
       throw new Error();
 
+    if (state.note.note.editCode) return await updateNoteAsync(state.note.note);
+
     return await saveNoteAsync(state.note.note.content);
   }
 );
 
 export const loadNote = createAsyncThunk(
   "note/loadNote",
-  async (id: string, thunkAPI) => {
-    const result = await loadNoteAsync(id);
+  async (args: LoadNoteParams, thunkAPI) => {
+    const result = await loadNoteAsync(args);
     if (result === null) throw new Error();
     return result;
   }

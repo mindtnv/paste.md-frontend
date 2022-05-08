@@ -22,7 +22,7 @@ const VimModeSwitcher = ({ ...props }: VimModeSwitcherProps) => {
         onChange={(e) =>
           dispatch(
             set({
-              content: e.target.checked,
+              value: e.target.checked,
             })
           )
         }

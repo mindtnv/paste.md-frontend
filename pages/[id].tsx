@@ -26,7 +26,7 @@ import { loadNote } from "../app/noteSlice";
 
 const NotePage = () => {
   const router = useRouter();
-  const { id, edit } = router.query;
+  const { id, edit, showLink } = router.query;
   const dispatch = useAppDispatch();
   const note = useAppSelector((state) => state.note.note);
   const loading = useAppSelector((state) => state.note.loading);
@@ -36,7 +36,7 @@ const NotePage = () => {
   const [editCode, setEditCode] = useState("");
 
   useEffect(() => {
-    if (id && typeof id === "string") dispatch(loadNote(id));
+    if (id && typeof id === "string") dispatch(loadNote({ id: id }));
   }, [id, dispatch]);
 
   return (
@@ -60,7 +60,12 @@ const NotePage = () => {
               ) : (
                 <></>
               )}
-              <NoteLink href={`${baseUrl}/${id}`} />
+
+              {showLink === "true" ? (
+                <NoteLink href={`${baseUrl}/${id}`} />
+              ) : (
+                <></>
+              )}
             </Box>
             <Skeleton
               id="viewer"
