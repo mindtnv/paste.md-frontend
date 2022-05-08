@@ -24,7 +24,7 @@ const NoteViewer = ({ note, ...props }: NoteViewerProps) => {
     <Box
       _focusVisible={{ outline: "none" }}
       bgColor="#0F111A"
-      tabIndex={-1}
+      tabIndex={-100}
       // @ts-ignore
       ref={ref}
       fontSize={["md", "xl"]}

@@ -84,7 +84,7 @@ export const documentViewerComponents: Options["components"] = {
     </Code>
   ),
   pre: ({ children }: any) => (
-    <Box mt={[-4, -4, -6]} as="pre" mb={[6, 6, 8]}>
+    <Box mt={[-4, -4, -6]} as="pre" mb={[6, 6, 8]} overflow="auto">
       {children}
     </Box>
   ),

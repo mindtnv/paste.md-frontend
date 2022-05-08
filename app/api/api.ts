@@ -61,7 +61,6 @@ export const loadNoteAsync = async (
   args: LoadNoteParams
 ): Promise<LoadNoteResult | null> => {
   try {
-    debugger;
     const response = await fetch(`${apiUrl}/note/${args.id}`, {
       method: "GET",
     });

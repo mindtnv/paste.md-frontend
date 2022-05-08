@@ -50,7 +50,10 @@ const vimNavigation = (target: HTMLElement, options: VimNavigationOptions) => {
 export const useVimNavigation = (options: VimNavigationOptions) => {
   const ref = useRef<HTMLElement>(null);
   useEffect(() => {
-    if (ref !== null && ref.current !== null) ref.current.focus();
+    if (ref !== null && ref.current !== null)
+      ref.current.focus({
+        preventScroll: true,
+      });
   });
   useEffect(() => {
     if (ref !== null) {

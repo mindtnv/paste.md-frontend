@@ -1,11 +1,8 @@
 ﻿import {
   Box,
-  Button,
-  Center,
   ChakraProps,
   HStack,
   Kbd,
-  Spinner,
   Tab,
   TabList,
   TabPanel,
@@ -18,8 +15,8 @@ import EditorNoteViewer from "./EditorNoteViewer";
 import VimModeSwitcher from "./VimModeSwitcher";
 import VimEditor from "./VimEditor";
 import { useAppDispatch, useAppSelector } from "../app/hooks/storeHooks";
+import CreateUpdateButton from "./CreateUpdateButton";
 import { saveNote } from "../app/noteSlice";
-import SaveUpdateButton from "./SaveUpdateButton";
 
 export interface EditorWindowProps extends ChakraProps {
   actionType: "create" | "update";
@@ -36,6 +33,7 @@ const AppEditorWindow = ({ actionType, maxH, ...props }: EditorWindowProps) => {
     if (activeTab === 1) window.scrollTo(0, scrollY);
   }, [activeTab, scrollY]);
 
+  let lockButtons = false;
   const handleTabSwitch = useCallback(
     (e: KeyboardEvent) => {
       const setTab = (tab: number) => {
@@ -45,7 +43,7 @@ const AppEditorWindow = ({ actionType, maxH, ...props }: EditorWindowProps) => {
           setScrollY(window.scrollY);
         }
       };
-      if (e.ctrlKey) {
+      if (e.ctrlKey && !lockButtons) {
         if (e.key === "e") {
           setTab(0);
         } else if (e.key === "p") {
@@ -54,6 +52,9 @@ const AppEditorWindow = ({ actionType, maxH, ...props }: EditorWindowProps) => {
           setTab(2);
         } else if (e.key === "i") {
           setTab(3);
+        } else if (e.key === "s") {
+          dispatch(saveNote());
+          lockButtons = true;
         } else return;
 
         e.preventDefault();
@@ -117,7 +118,7 @@ const AppEditorWindow = ({ actionType, maxH, ...props }: EditorWindowProps) => {
               />
             </NoSsr>
             <HStack mt={6} justifyContent="flex-end">
-              <SaveUpdateButton actionType={actionType} />
+              <CreateUpdateButton actionType={actionType} />
             </HStack>
           </TabPanel>
           <TabPanel p={0} py={[0, 6]} w="100%" overflow="auto">

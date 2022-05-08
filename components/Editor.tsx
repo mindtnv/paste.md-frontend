@@ -52,6 +52,10 @@ const customKeymap = keymap.of([
     key: "c-i",
     run: () => true,
   },
+  {
+    key: "c-s",
+    run: () => true,
+  },
 ]);
 
 const createBaseExtensions = () => {
@@ -109,7 +113,7 @@ const Editor = ({
     }
     const timeout = setTimeout(() => {
       dispatch(setNoteContent(localNoteContent));
-    }, 400);
+    }, 200);
     return () => {
       clearTimeout(timeout);
     };

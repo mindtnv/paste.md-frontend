@@ -6,6 +6,7 @@
   Text,
   useToast,
 } from "@chakra-ui/react";
+import { CopyIcon } from "@chakra-ui/icons";
 
 export interface NoteLinkProps extends ChakraProps {
   href: string;
@@ -15,14 +16,14 @@ const NoteLink = ({ href, ...props }: NoteLinkProps) => {
   const toast = useToast();
   return (
     <Box
-      {...props}
       textAlign="center"
-      mt={4}
       borderRadius={5}
+      borderWidth={1}
       bgColor="#0F111A"
       py={4}
       px={2}
       fontSize={["sm", "md", "lg", "xl"]}
+      {...props}
     >
       <Heading as="h2" fontSize="2xl" mb={2}>
         Your paste link

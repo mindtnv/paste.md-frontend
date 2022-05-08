@@ -14,6 +14,7 @@
   Spinner,
   Text,
   useDisclosure,
+  useToast,
 } from "@chakra-ui/react";
 import { useRouter } from "next/router";
 import { useAppDispatch, useAppSelector } from "../app/hooks/storeHooks";
@@ -23,6 +24,7 @@ import NoteLink from "../components/NoteLink";
 import { baseUrl, validateEditCodeAsync } from "../app/api/api";
 import EditCode from "../components/EditCode";
 import { loadNote } from "../app/noteSlice";
+import NoteTitle from "../components/NoteTitle";
 
 const NotePage = () => {
   const router = useRouter();
@@ -34,6 +36,7 @@ const NotePage = () => {
   const [errors, setErrors] = useState<string[]>([]);
   const [validating, setValidating] = useState(false);
   const [editCode, setEditCode] = useState("");
+  const toast = useToast();
 
   useEffect(() => {
     if (id && typeof id === "string") dispatch(loadNote({ id: id }));
@@ -51,18 +54,16 @@ const NotePage = () => {
               mx="auto"
               alignContent="center"
               mt={[0, 4]}
-              mb={[4, 8]}
-              px={[2, 0]}
+              mb={[0, 4]}
             >
-              {edit ? (
-                // @ts-ignore
-                <EditCode my={[6, 8, 10]} code={edit} />
-              ) : (
-                <></>
-              )}
-
               {showLink === "true" ? (
-                <NoteLink href={`${baseUrl}/${id}`} />
+                <NoteLink
+                  mt={[6, 10, 14]}
+                  mb={[6, 0]}
+                  borderRadius={[0, 5]}
+                  borderWidth={[0, 1]}
+                  href={`${baseUrl}/${id}`}
+                />
               ) : (
                 <></>
               )}
@@ -70,11 +71,32 @@ const NotePage = () => {
             <Skeleton
               id="viewer"
               isLoaded={loading === "succeeded"}
-              minH="80vh"
+              minH="60vh"
               maxW="container.lg"
               mx="auto"
+              mt={[0, 10, 16]}
             >
+              <NoteTitle onEdit={() => onOpen()} />
+              {edit ? (
+                <EditCode
+                  // @ts-ignore
+                  code={edit}
+                  borderWidth={0}
+                  borderLeftWidth={[0, 1]}
+                  borderRightWidth={[0, 1]}
+                  borderBottomWidth={1}
+                  borderRadius={0}
+                  px={["1.2rem", "2.5rem", "4rem"]}
+                  py={6}
+                />
+              ) : (
+                <></>
+              )}
+
               <NoteViewer
+                borderWidth={[0, 1]}
+                borderTop={0}
+                borderTopRadius={0}
                 note={note!}
                 minW={["300px", "400px"]}
                 w="100%"
@@ -83,21 +105,6 @@ const NotePage = () => {
                 px={["1.2rem", "2.5rem", "4rem"]}
                 py={["1.5rem", "2rem", "3rem"]}
               />
-              <Box
-                mt={[8, 6]}
-                display="flex"
-                mx={[2, 0]}
-                justifyContent="flex-end"
-              >
-                <Button
-                  minW={["100%", "200px"]}
-                  colorScheme="orange"
-                  size="lg"
-                  onClick={onOpen}
-                >
-                  Edit paste
-                </Button>
-              </Box>
             </Skeleton>
           </Box>
         )}
