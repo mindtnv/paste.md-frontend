@@ -42,6 +42,22 @@ const NotePage = () => {
     if (id && typeof id === "string") dispatch(loadNote({ id: id }));
   }, [id, dispatch]);
 
+  useEffect(() => {
+    if (note.content !== "" && window.location.hash) {
+      const element = document.getElementById(
+        window.location.hash.substring(1)
+      );
+      if (element !== null) {
+        element.classList.add("target");
+        window.scrollTo({
+          top: element.offsetTop - 10,
+          left: 0,
+          behavior: "smooth",
+        });
+      }
+    }
+  }, [note]);
+
   return (
     <>
       <Box>

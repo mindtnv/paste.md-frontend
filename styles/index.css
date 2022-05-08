@@ -18,10 +18,45 @@
   border-radius: 5px;
 }
 
-#viewer li p {
+.md-viewer li p {
   margin-bottom: 0.2rem !important;
 }
 
-#viewer p ~ ol {
+.md-viewer p ~ ol {
   margin-top: -1rem !important;
+}
+
+.md-viewer li pre {
+  margin-top: 0 !important;
+}
+
+.md-viewer blockquote p:last-of-type {
+  margin-bottom: 0 !important;
+}
+
+#viewer .anchor-link {
+  text-decoration: none;
+  transition: 0.2s ease-in margin-left;
+}
+
+#viewer .anchor-link:target,
+#viewer .anchor-link:hover,
+#viewer .target {
+  margin-left: 0 !important;
+  /*noinspection CssUnresolvedCustomProperty*/
+  color: var(--chakra-colors-orange-400);
+}
+
+#viewer .anchor-link:before {
+  content: "# ";
+  opacity: 0;
+  transition: 0.2s ease-in opacity;
+}
+
+#viewer .anchor-link:hover:before,
+#viewer .anchor-link:target:before,
+#viewer .anchor-link:hover:before,
+#viewer .target:before {
+  content: "# ";
+  opacity: 1;
 }

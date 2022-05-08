@@ -26,18 +26,38 @@ const headerFabric = (headerLevel: number) => {
     return "md";
   };
 
+  const ml = (headerLevel: number) => {
+    if (headerLevel === 1) return ["-2rem", "-2.6rem"];
+    if (headerLevel === 2) return ["-1.8rem", "-2rem"];
+    if (headerLevel === 3) return ["-1.5rem", "-1.8rem"];
+
+    if (headerLevel === 4) return ["-1.3rem", "-1.5rem"];
+    if (headerLevel === 5) return ["-1rem", "-1.2rem"];
+
+    return ["-.8rem", "-.9rem"];
+  };
+
   function header({ children, ...props }: any) {
+    const id = children?.toString()?.toLowerCase()?.replaceAll(" ", "_");
     return (
       <>
         <Heading
-          as={`h${headerLevel}`}
+          // @ts-ignore
+          as={`h${headerLevel.toString()}`}
           color="white"
           fontSize={[fontSize(headerLevel + 1), fontSize(headerLevel)]}
           my={[6, 6, 8]}
           mt={[10, 12, 14]}
-          {...props}
         >
-          {children}
+          <Link
+            _hover={{ color: "orange.400" }}
+            id={id}
+            ml={ml(headerLevel)}
+            href={`#${id}`}
+            className="anchor-link"
+          >
+            {children}
+          </Link>
         </Heading>
         {headerLevel < 3 ? <Divider mb={[6, 6, 8]} /> : <></>}
       </>
@@ -66,7 +86,14 @@ export const documentViewerComponents: Options["components"] = {
     </Link>
   ),
   blockquote: ({ children }: any) => (
-    <Box pl={4} pb={4} pt={2} borderLeft="4px solid #FFFFFF30">
+    <Box
+      as="blockquote"
+      mb={[6, 8]}
+      pl={4}
+      pb={2}
+      pt={2}
+      borderLeft="4px solid #FFFFFF30"
+    >
       {children}
     </Box>
   ),
