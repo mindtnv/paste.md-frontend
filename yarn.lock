@@ -2350,6 +2350,11 @@
   dependencies:
     "react-is" "^16.7.0"
 
+"husky@^8.0.0":
+  "integrity" "sha512-4qbE/5dzNDNxFEkX9MNRPKl5+omTXQzdILCUWiqG/lWIAioiM5vln265/l6I2Zx8gpW8l1ukZwGQeCFbBZ6+6w=="
+  "resolved" "https://registry.npmjs.org/husky/-/husky-8.0.0.tgz"
+  "version" "8.0.0"
+
 "ignore@^5.2.0":
   "integrity" "sha512-CmxgYGiEPCLhfLnpPp1MoRmifwEIOgjcHXxOBjv7mY96c+eWScsOP9c112ZyLdWHi0FxHjI+4uVhKYp/gcdRmQ=="
   "resolved" "https://registry.npmjs.org/ignore/-/ignore-5.2.0.tgz"

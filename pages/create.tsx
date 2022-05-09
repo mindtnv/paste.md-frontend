@@ -32,11 +32,11 @@ const CreatePage = () => {
         variant: "solid",
       });
     }
-  }, [id, editCode, router, dispatch, saving]);
+  }, [id, editCode, router, dispatch, saving, toast]);
 
   return (
     <>
-      <Box>
+      <Box pt={[0, 4, 6]}>
         <AppEditorWindow maxH="75vh" actionType="create" />
       </Box>
     </>

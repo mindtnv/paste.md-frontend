@@ -60,6 +60,6 @@ export const useVimNavigation = (options: VimNavigationOptions) => {
       const clean = vimNavigation(ref.current!, options);
       return () => clean.forEach((c) => c());
     }
-  }, [ref]);
+  }, [ref, options]);
   return ref;
 };

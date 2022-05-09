@@ -32,7 +32,7 @@ const EditPage = () => {
         variant: "solid",
       });
     }
-  }, [id, editCode, router, dispatch, saving]);
+  }, [id, editCode, router, dispatch, saving, toast]);
 
   useEffect(() => {
     if (
@@ -51,7 +51,7 @@ const EditPage = () => {
 
   return (
     <>
-      <Box>
+      <Box pt={[0, 4, 6]}>
         <AppEditorWindow maxH="75vh" actionType="update" />
       </Box>
     </>

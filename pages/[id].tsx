@@ -1,7 +1,6 @@
 ﻿import {
   Box,
   Button,
-  Heading,
   Input,
   Modal,
   ModalBody,
@@ -14,7 +13,6 @@
   Spinner,
   Text,
   useDisclosure,
-  useToast,
 } from "@chakra-ui/react";
 import { useRouter } from "next/router";
 import { useAppDispatch, useAppSelector } from "../app/hooks/storeHooks";
@@ -25,6 +23,7 @@ import { baseUrl, validateEditCodeAsync } from "../app/api/api";
 import EditCode from "../components/EditCode";
 import { loadNote } from "../app/noteSlice";
 import NoteTitle from "../components/NoteTitle";
+import NotFound from "../components/NotFound";
 
 const NotePage = () => {
   const router = useRouter();
@@ -36,7 +35,6 @@ const NotePage = () => {
   const [errors, setErrors] = useState<string[]>([]);
   const [validating, setValidating] = useState(false);
   const [editCode, setEditCode] = useState("");
-  const toast = useToast();
 
   useEffect(() => {
     if (id && typeof id === "string") dispatch(loadNote({ id: id }));
@@ -60,9 +58,9 @@ const NotePage = () => {
 
   return (
     <>
-      <Box>
+      <Box mb={[0, 14]}>
         {loading === "failed" ? (
-          <Heading>404 not found</Heading>
+          <NotFound text="Note not found 👽" />
         ) : (
           <Box overflowX="auto">
             <Box
@@ -141,7 +139,7 @@ const NotePage = () => {
               onChange={(e) => setEditCode(e.target.value)}
               colorScheme="orange"
               autoFocus
-            ></Input>
+            />
           </ModalBody>
           <ModalFooter>
             <Button colorScheme="red" mr={3} onClick={onClose}>
