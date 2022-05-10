@@ -1,0 +1,30 @@
+﻿version: "3.7"
+
+networks:
+  traefik-public:
+    external: true
+
+services:
+  pastemd-frontend:
+    image: registry.dev.zldk.su/pastemd-frontend
+    networks:
+      - traefik-public
+
+    deploy:
+      restart_policy:
+        condition: on-failure
+      mode: replicated
+      replicas: 1
+      labels:
+        - traefik.enable=true
+        - traefik.docker.network=traefik-public
+        - traefik.http.routers.pastemd-frontend.rule=Host(`pastemd.gbms.site`)
+        - traefik.http.routers.pastemd-frontend-http.entrypoints=http
+        - traefik.http.routers.pastemd-frontend-http.service=pastemd-frontend
+        - traefik.http.routers.pastemd-frontend-http.rule=Host(`pastemd.gbms.site`)
+        - traefik.http.routers.pastemd-frontend-http.middlewares=https-redirect
+        - traefik.http.routers.pastemd-frontend.entrypoints=https
+        - traefik.http.routers.pastemd-frontend.tls=true
+        - traefik.http.routers.pastemd-frontend.tls.certresolver=le
+        - traefik.http.services.pastemd-frontend.loadbalancer.server.port=3000
+        - traefik.http.routers.pastemd-frontend.service=pastemd-frontend
