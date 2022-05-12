@@ -5,7 +5,7 @@ const AppNavBarLogo = () => {
   return (
     <AppNavBarLink href="/" _hover={{ textDecoration: "none" }}>
       <HStack alignContent="center" h="100%">
-        <Heading as="h2" fontSize={26}>
+        <Heading as="h2" fontSize={[20, 26]}>
           Paste.md
         </Heading>
       </HStack>

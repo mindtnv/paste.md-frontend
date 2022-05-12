@@ -113,7 +113,7 @@ const AppEditorWindow = ({ actionType, ...props }: EditorWindowProps) => {
                 autoFocus={editorFocus}
                 onKeyDown={handleTabSwitch}
                 fontSize={[25, 30, 30]}
-                maxH="70vh"
+                maxH="75vh"
               />
             </NoSsr>
             <HStack mt={[10, 8]} justifyContent="flex-end" px={2}>

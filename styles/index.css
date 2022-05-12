@@ -60,3 +60,12 @@
   content: "# ";
   opacity: 1;
 }
+
+@media (max-width: 600px) {
+  .cm-gutters {
+    display: none !important;
+  }
+  .cm-editor {
+    padding-left: 1rem !important;
+  }
+}
