@@ -1,9 +1,10 @@
-﻿import { Box, useToast } from "@chakra-ui/react";
+﻿import { useToast } from "@chakra-ui/react";
 import AppEditorWindow from "../../components/AppEditorWindow";
 import { useRouter } from "next/router";
 import { useAppDispatch, useAppSelector } from "../../app/hooks/storeHooks";
 import { useEffect } from "react";
 import { loadNote, noteSaved } from "../../app/noteSlice";
+import { NextSeo } from "next-seo";
 
 const EditPage = () => {
   const router = useRouter();
@@ -51,6 +52,10 @@ const EditPage = () => {
 
   return (
     <>
+      <NextSeo
+        title="Paste.md | Edit"
+        description="Pastemd. Service for anonymous creating and sharing markdown files."
+      />
       <AppEditorWindow pt={[0, 4, 6]} actionType="update" />
     </>
   );

@@ -29,6 +29,7 @@ import { loadNote } from "../app/noteSlice";
 import NoteTitle from "../components/NoteTitle";
 import NotFound from "../components/NotFound";
 import { motion } from "framer-motion";
+import { NextSeo } from "next-seo";
 
 const NotePage = () => {
   const router = useRouter();
@@ -64,6 +65,10 @@ const NotePage = () => {
 
   return (
     <>
+      <NextSeo
+        title="Paste.md | Browse"
+        description="Pastemd. Service for anonymous creating and sharing markdown files."
+      />
       <Box mb={[0, 14]}>
         {loading === "failed" ? (
           <NotFound text="Note not found 👽" />

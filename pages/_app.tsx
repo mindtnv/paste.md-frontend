@@ -5,16 +5,19 @@ import ChakraLayout from "../components/layouts/ChakraLayout";
 import { Provider } from "react-redux";
 import { store } from "../app/store";
 import "../styles/index.css";
+import SeoLayout from "../components/layouts/SeoLayout";
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (
     <ChakraLayout>
-      <Provider store={store}>
-        <Fonts />
-        <AppLayout>
-          <Component {...pageProps} />
-        </AppLayout>
-      </Provider>
+      <SeoLayout>
+        <Provider store={store}>
+          <Fonts />
+          <AppLayout>
+            <Component {...pageProps} />
+          </AppLayout>
+        </Provider>
+      </SeoLayout>
     </ChakraLayout>
   );
 }

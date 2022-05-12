@@ -4,6 +4,7 @@ import { useAppDispatch, useAppSelector } from "../app/hooks/storeHooks";
 import { useEffect } from "react";
 import { useRouter } from "next/router";
 import { noteSaved } from "../app/noteSlice";
+import { NextSeo } from "next-seo";
 
 const CreatePage = () => {
   const saving = useAppSelector((state) => state.note.saving);
@@ -36,6 +37,10 @@ const CreatePage = () => {
 
   return (
     <>
+      <NextSeo
+        title="Paste.md | Create"
+        description="Pastemd. Service for anonymous creating and sharing markdown files."
+      />
       <AppEditorWindow pt={[0, 4, 6]} actionType="create" />
     </>
   );
