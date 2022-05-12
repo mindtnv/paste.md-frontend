@@ -20,6 +20,7 @@ const Home: NextPage = () => {
             width={["100%", "250px"]}
             height={["50px", "60px", "70px"]}
             colorScheme="orange"
+            fontSize="xl"
           >
             Create note
           </Button>
@@ -31,9 +32,8 @@ const Home: NextPage = () => {
           Vim mode
         </Heading>
         <Text mb={8} fontSize={["xl", "2xl"]}>
-          <strong>Paste.md</strong> - service for anonymous creating and sharing
-          markdown files. There is beautiful markdown editor and{" "}
-          <strong>VIM mode</strong>!
+          Vim mode available in <strong>Editor</strong> and{" "}
+          <strong>Document Viewer</strong>.
         </Text>
       </Box>
       <Divider my={10} />

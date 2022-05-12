@@ -1,5 +1,4 @@
-﻿import { saveNote } from "../app/noteSlice";
-import {
+﻿import {
   Box,
   Button,
   Center,
@@ -8,7 +7,7 @@ import {
   Spinner,
 } from "@chakra-ui/react";
 import React from "react";
-import { useAppDispatch, useAppSelector } from "../app/hooks/storeHooks";
+import { useAppSelector } from "../app/hooks/storeHooks";
 
 export interface CreateUpdateButtonProps extends ChakraProps {
   actionType: "create" | "update";
@@ -20,7 +19,6 @@ const CreateUpdateButton = ({
   onClick,
   ...props
 }: CreateUpdateButtonProps) => {
-  const dispatch = useAppDispatch();
   const saving = useAppSelector((state) => state.note.saving);
 
   return (
@@ -32,9 +30,10 @@ const CreateUpdateButton = ({
       onClick={() => {
         if (onClick) onClick();
       }}
+      {...props}
     >
       <>
-        <Box mr={2} display={["none", "none", "block"]}>
+        <Box mr={2} display={["none", "none", "block"]} as="span">
           <Kbd>Ctrl</Kbd>+<Kbd>S</Kbd>
         </Box>
         {saving === "idle" || saving === "failed" || saving === "succeeded" ? (
@@ -44,9 +43,9 @@ const CreateUpdateButton = ({
             "Update paste"
           )
         ) : (
-          <Center>
+          <Box justifyContent="center">
             <Spinner />
-          </Center>
+          </Box>
         )}
       </>
     </Button>

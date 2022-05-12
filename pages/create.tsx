@@ -1,4 +1,4 @@
-﻿import { Box, useToast } from "@chakra-ui/react";
+﻿import { useToast } from "@chakra-ui/react";
 import AppEditorWindow from "../components/AppEditorWindow";
 import { useAppDispatch, useAppSelector } from "../app/hooks/storeHooks";
 import { useEffect } from "react";
@@ -36,9 +36,7 @@ const CreatePage = () => {
 
   return (
     <>
-      <Box pt={[0, 4, 6]}>
-        <AppEditorWindow maxH="75vh" actionType="create" />
-      </Box>
+      <AppEditorWindow pt={[0, 4, 6]} actionType="create" />
     </>
   );
 };

@@ -1,6 +1,7 @@
 ﻿import {
   Box,
   ChakraProps,
+  Heading,
   HStack,
   Kbd,
   Tab,
@@ -14,7 +15,7 @@ import NoSsr from "./NoSsr";
 import EditorNoteViewer from "./EditorNoteViewer";
 import VimModeSwitcher from "./VimModeSwitcher";
 import VimEditor from "./VimEditor";
-import { useAppDispatch, useAppSelector } from "../app/hooks/storeHooks";
+import { useAppDispatch } from "../app/hooks/storeHooks";
 import CreateUpdateButton from "./CreateUpdateButton";
 import { saveNote } from "../app/noteSlice";
 
@@ -22,11 +23,10 @@ export interface EditorWindowProps extends ChakraProps {
   actionType: "create" | "update";
 }
 
-const AppEditorWindow = ({ actionType, maxH, ...props }: EditorWindowProps) => {
+const AppEditorWindow = ({ actionType, ...props }: EditorWindowProps) => {
   const [activeTab, setActiveTab] = useState(0);
   const [editorFocus, setEditorFocus] = useState(true);
   const [scrollY, setScrollY] = useState(0);
-  const saving = useAppSelector((state) => state.note.saving);
   const dispatch = useAppDispatch();
 
   useEffect(() => {
@@ -79,9 +79,8 @@ const AppEditorWindow = ({ actionType, maxH, ...props }: EditorWindowProps) => {
         onChange={setActiveTab}
         // @ts-ignore
         onKeyDown={handleTabSwitch}
-        minH={400}
       >
-        <TabList>
+        <TabList pt={[6, 0]}>
           <Tab>
             Editor
             <Box display={["none", "none", "block"]}>
@@ -107,17 +106,17 @@ const AppEditorWindow = ({ actionType, maxH, ...props }: EditorWindowProps) => {
             </Box>
           </Tab>
         </TabList>
-        <TabPanels>
-          <TabPanel p={0} py={[0, 6]}>
+        <TabPanels height="100%">
+          <TabPanel p={0} py={[0, 6]} height="100%">
             <NoSsr>
               <VimEditor
                 autoFocus={editorFocus}
                 onKeyDown={handleTabSwitch}
-                fontSize={[10, 15, 25]}
-                maxH={maxH}
+                fontSize={[25, 30, 30]}
+                maxH="70vh"
               />
             </NoSsr>
-            <HStack mt={6} justifyContent="flex-end">
+            <HStack mt={[10, 8]} justifyContent="flex-end" px={2}>
               <CreateUpdateButton
                 actionType={actionType}
                 onClick={() => dispatch(saveNote())}
@@ -143,9 +142,12 @@ const AppEditorWindow = ({ actionType, maxH, ...props }: EditorWindowProps) => {
             Instruction
           </TabPanel>
           <TabPanel p={0} py={[0, 6]} w="100%" overflow="auto">
-            <HStack>
-              <VimModeSwitcher />
-            </HStack>
+            <Box mt={8} px={4}>
+              <Heading mb={4}>Vim settings</Heading>
+              <HStack>
+                <VimModeSwitcher />
+              </HStack>
+            </Box>
           </TabPanel>
         </TabPanels>
       </Tabs>
