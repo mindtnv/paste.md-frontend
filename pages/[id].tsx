@@ -19,11 +19,16 @@ import { useAppDispatch, useAppSelector } from "../app/hooks/storeHooks";
 import { useEffect, useState } from "react";
 import NoteViewer from "../components/NoteViewer";
 import NoteLink from "../components/NoteLink";
-import { baseUrl, validateEditCodeAsync } from "../app/api/api";
+import {
+  baseUrl,
+  deleteNoteAsync,
+  validateEditCodeAsync,
+} from "../app/api/api";
 import EditCode from "../components/EditCode";
 import { loadNote } from "../app/noteSlice";
 import NoteTitle from "../components/NoteTitle";
 import NotFound from "../components/NotFound";
+import { motion } from "framer-motion";
 
 const NotePage = () => {
   const router = useRouter();
@@ -32,9 +37,10 @@ const NotePage = () => {
   const note = useAppSelector((state) => state.note.note);
   const loading = useAppSelector((state) => state.note.loading);
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const [action, setAction] = useState<"edit" | "delete">("edit");
   const [errors, setErrors] = useState<string[]>([]);
   const [validating, setValidating] = useState(false);
-  const [editCode, setEditCode] = useState("");
+  const [editCode, setEditCode] = useState(edit as string);
 
   useEffect(() => {
     if (id && typeof id === "string") dispatch(loadNote({ id: id }));
@@ -71,13 +77,20 @@ const NotePage = () => {
               mb={[0, 4]}
             >
               {showLink === "true" ? (
-                <NoteLink
-                  mt={[6, 10, 14]}
-                  mb={[6, 0]}
-                  borderRadius={[0, 5]}
-                  borderWidth={[0, 1]}
-                  href={`${baseUrl}/${id}`}
-                />
+                <motion.div
+                  animate={{ opacity: [0, 1], y: [-30, 0] }}
+                  transition={{
+                    default: { duration: 0.3 },
+                  }}
+                >
+                  <NoteLink
+                    mt={[6, 10, 14]}
+                    mb={[6, 0]}
+                    borderRadius={[0, 5]}
+                    borderWidth={[0, 1]}
+                    href={`${baseUrl}/${id}`}
+                  />
+                </motion.div>
               ) : (
                 <></>
               )}
@@ -90,35 +103,51 @@ const NotePage = () => {
               mx="auto"
               mt={[0, 10, 16]}
             >
-              <NoteTitle onEdit={() => onOpen()} />
-              {edit ? (
-                <EditCode
-                  // @ts-ignore
-                  code={edit}
-                  borderWidth={0}
-                  borderLeftWidth={[0, 1]}
-                  borderRightWidth={[0, 1]}
-                  borderBottomWidth={1}
-                  borderRadius={0}
-                  px={["1.2rem", "2.5rem", "4rem"]}
-                  py={6}
+              <motion.div
+                animate={{ opacity: [0, 1], y: [-30, 0] }}
+                transition={{
+                  default: { duration: 0.3 },
+                }}
+              >
+                <NoteTitle
+                  onEdit={() => {
+                    setAction("edit");
+                    onOpen();
+                  }}
+                  onDelete={() => {
+                    setAction("delete");
+                    onOpen();
+                  }}
                 />
-              ) : (
-                <></>
-              )}
+                {edit ? (
+                  <EditCode
+                    // @ts-ignore
+                    code={edit}
+                    borderWidth={0}
+                    borderLeftWidth={[0, 1]}
+                    borderRightWidth={[0, 1]}
+                    borderBottomWidth={1}
+                    borderRadius={0}
+                    px={["1.2rem", "2.5rem", "4rem"]}
+                    py={6}
+                  />
+                ) : (
+                  <></>
+                )}
 
-              <NoteViewer
-                borderWidth={[0, 1]}
-                borderTop={0}
-                borderTopRadius={0}
-                note={note!}
-                minW={["300px", "400px"]}
-                w="100%"
-                maxW="container.lg"
-                mx="auto"
-                px={["1.2rem", "2.5rem", "4rem"]}
-                py={["1.5rem", "2rem", "3rem"]}
-              />
+                <NoteViewer
+                  borderWidth={[0, 1]}
+                  borderTop={0}
+                  borderTopRadius={0}
+                  note={note!}
+                  minW={["300px", "400px"]}
+                  w="100%"
+                  maxW="container.lg"
+                  mx="auto"
+                  px={["1.2rem", "2.5rem", "4rem"]}
+                  py={["1.5rem", "2rem", "3rem"]}
+                />
+              </motion.div>
             </Skeleton>
           </Box>
         )}
@@ -136,37 +165,64 @@ const NotePage = () => {
               </Text>
             ))}
             <Input
+              value={editCode}
               onChange={(e) => setEditCode(e.target.value)}
               colorScheme="orange"
               autoFocus
             />
           </ModalBody>
           <ModalFooter>
-            <Button colorScheme="red" mr={3} onClick={onClose}>
+            <Button
+              colorScheme="orange"
+              variant="ghost"
+              mr={3}
+              onClick={onClose}
+            >
               Close
             </Button>
             <Button
-              variant="ghost"
+              variant={action === "edit" ? "ghost" : "solid"}
+              colorScheme={action === "edit" ? "blue" : "red"}
               onClick={() => {
-                setValidating(true);
-                validateEditCodeAsync({
-                  // @ts-ignore
-                  id: id,
-                  editCode,
-                })
-                  .then((isValid) => {
-                    if (isValid) {
-                      router.push(`/edit/${id}?editCode=${editCode}`);
-                    } else {
-                      setErrors(["Edit code not valid"]);
-                    }
+                if (action === "edit") {
+                  setValidating(true);
+                  validateEditCodeAsync({
+                    // @ts-ignore
+                    id: id,
+                    editCode,
                   })
-                  .finally(() => {
-                    setValidating(false);
-                  });
+                    .then((isValid) => {
+                      if (isValid) {
+                        router.push(`/edit/${id}?editCode=${editCode}`);
+                      } else {
+                        setErrors(["Edit code not valid"]);
+                      }
+                    })
+                    .finally(() => {
+                      setValidating(false);
+                    });
+                }
+
+                if (action === "delete") {
+                  setValidating(true);
+                  deleteNoteAsync({ id: note.id, editCode })
+                    .then((r) => {
+                      if (r === true) {
+                        router.push("/");
+                      } else {
+                        setErrors(["Edit code not valid"]);
+                      }
+                    })
+                    .catch(() => {
+                      setErrors(["Edit code not valid"]);
+                    })
+                    .finally(() => {
+                      setValidating(false);
+                    });
+                }
               }}
             >
-              {validating ? <Spinner /> : "Edit"}
+              {validating ? <Spinner /> : action === "edit" ? "Edit" : "Delete"}
             </Button>
           </ModalFooter>
         </ModalContent>

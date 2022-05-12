@@ -51,9 +51,7 @@ const EditPage = () => {
 
   return (
     <>
-      <Box pt={[0, 4, 6]}>
-        <AppEditorWindow maxH="75vh" actionType="update" />
-      </Box>
+      <AppEditorWindow pt={[0, 4, 6]} actionType="update" />
     </>
   );
 };

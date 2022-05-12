@@ -1,4 +1,4 @@
-import { Box, Container, Text, useColorModeValue } from "@chakra-ui/react";
+import { Box, Container, Text } from "@chakra-ui/react";
 
 const AppFooter = () => {
   return (
@@ -14,8 +14,13 @@ const AppFooter = () => {
     >
       <Container maxW="container.lg">
         <Text align="center">
-          🛠 Builded by <strong>gbms</strong> with <strong>Next</strong>/
-          <strong>Chakra UI</strong>
+          🛠 Builded by
+          <Box color="orange.300" as="strong" mx={1}>
+            <a href="https://gbms.site" target="_blank" rel="noreferrer">
+              gbms
+            </a>
+          </Box>
+          with <strong>Next</strong>/<strong>Chakra UI</strong>
         </Text>
       </Container>
     </Box>

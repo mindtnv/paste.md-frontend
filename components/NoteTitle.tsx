@@ -9,13 +9,14 @@
   MenuList,
 } from "@chakra-ui/react";
 import { useAppSelector } from "../app/hooks/storeHooks";
-import { ChevronDownIcon, EditIcon } from "@chakra-ui/icons";
+import { ChevronDownIcon, DeleteIcon, EditIcon } from "@chakra-ui/icons";
 
 export interface NoteTitleProps extends ChakraProps {
   onEdit?: () => void;
+  onDelete?: () => void;
 }
 
-const NoteTitle = ({ onEdit, ...props }: NoteTitleProps) => {
+const NoteTitle = ({ onEdit, onDelete, ...props }: NoteTitleProps) => {
   const title = useAppSelector((state) => state.note.note.title);
 
   return (
@@ -52,7 +53,13 @@ const NoteTitle = ({ onEdit, ...props }: NoteTitleProps) => {
           >
             <EditIcon mr={2} /> Edit
           </MenuItem>
-          <MenuItem>Delete</MenuItem>
+          <MenuItem
+            onClick={() => {
+              if (onDelete) onDelete();
+            }}
+          >
+            <DeleteIcon mr={2} /> Delete
+          </MenuItem>
         </MenuList>
       </Menu>
     </HStack>

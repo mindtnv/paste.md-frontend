@@ -18,6 +18,7 @@ import VimEditor from "./VimEditor";
 import { useAppDispatch } from "../app/hooks/storeHooks";
 import CreateUpdateButton from "./CreateUpdateButton";
 import { saveNote } from "../app/noteSlice";
+import { motion } from "framer-motion";
 
 export interface EditorWindowProps extends ChakraProps {
   actionType: "create" | "update";
@@ -109,19 +110,33 @@ const AppEditorWindow = ({ actionType, ...props }: EditorWindowProps) => {
         <TabPanels height="100%">
           <TabPanel p={0} py={[0, 6]} height="100%">
             <NoSsr>
-              <VimEditor
-                autoFocus={editorFocus}
-                onKeyDown={handleTabSwitch}
-                fontSize={[25, 30, 30]}
-                maxH="75vh"
-              />
+              <motion.div
+                animate={{ opacity: [0, 1] }}
+                transition={{
+                  default: { duration: 0.3 },
+                }}
+              >
+                <VimEditor
+                  autoFocus={editorFocus}
+                  onKeyDown={handleTabSwitch}
+                  fontSize={[25, 30, 30]}
+                  maxH="75vh"
+                />
+              </motion.div>
+              <motion.div
+                animate={{ opacity: [0, 1] }}
+                transition={{
+                  default: { duration: 0.3 },
+                }}
+              >
+                <HStack mt={[10, 8]} justifyContent="flex-end" px={2}>
+                  <CreateUpdateButton
+                    actionType={actionType}
+                    onClick={() => dispatch(saveNote())}
+                  />
+                </HStack>
+              </motion.div>
             </NoSsr>
-            <HStack mt={[10, 8]} justifyContent="flex-end" px={2}>
-              <CreateUpdateButton
-                actionType={actionType}
-                onClick={() => dispatch(saveNote())}
-              />
-            </HStack>
           </TabPanel>
           <TabPanel p={0} py={[0, 6]} w="100%" overflow="auto">
             <NoSsr>

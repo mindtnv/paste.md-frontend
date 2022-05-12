@@ -58,6 +58,20 @@ export const updateNoteAsync = async (note: Note) => {
   return body;
 };
 
+export const deleteNoteAsync = async ({
+  id,
+  editCode,
+}: {
+  id: string;
+  editCode: string;
+}) => {
+  const response = await fetch(`${apiUrl}/note/${id}?editCode=${editCode}`, {
+    method: "DELETE",
+  });
+  debugger;
+  return response.status === 200;
+};
+
 export const loadNoteAsync = async (
   args: LoadNoteArgs
 ): Promise<LoadNoteResult | null> => {
