@@ -16,6 +16,7 @@ import NotFound from "../components/NotFound";
 import { motion } from "framer-motion";
 import { NextSeo } from "next-seo";
 import EditCodeModal, { OnInvokeArgs } from "../components/EditCodeModal";
+import { useHotKeys } from "../app/hooks/useHotKeys";
 
 const NotePage = () => {
   const router = useRouter();
@@ -25,6 +26,13 @@ const NotePage = () => {
   const loading = useAppSelector((state) => state.note.loading);
   const editDisclosure = useDisclosure();
   const deleteDisclosure = useDisclosure();
+
+  useHotKeys({
+    Enter: {
+      handler: () => router.push("/create"),
+      lockTimout: 500,
+    },
+  });
 
   const onEdit = useCallback(
     async (args: OnInvokeArgs) => {

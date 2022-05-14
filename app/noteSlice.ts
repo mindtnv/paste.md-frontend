@@ -88,6 +88,7 @@ const noteSlice = createSlice({
 
     noteSaved: (state) => {
       state.saving = "idle";
+      state.loading = "idle";
       state.note = { ...emptyNote };
       localStorage.setItem(localStorageKey, emptyNote.content);
     },
@@ -120,6 +121,10 @@ const noteSlice = createSlice({
         state.saving = "succeeded";
         state.note.id = action.payload.id;
         state.note.editCode = action.payload.editCode;
+        // state.note = { ...emptyNote };
+        // state.saving = "idle";
+        // state.loading = "idle";
+        // localStorage.setItem(localStorageKey, emptyNote.content);
       })
       .addCase(saveNote.rejected, (state) => {
         state.saving = "failed";
@@ -132,7 +137,6 @@ export const {
   setNote,
   setNoteContent,
   noteSaved,
-  setNoteTitle,
 } = noteSlice.actions;
 
 export default noteSlice.reducer;

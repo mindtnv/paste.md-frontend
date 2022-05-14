@@ -5,11 +5,15 @@ import {
   ChakraProps,
   Divider,
   Heading,
+  Kbd,
   Text,
 } from "@chakra-ui/react";
 import Link from "next/link";
 import { motion } from "framer-motion";
 import { NextSeo } from "next-seo";
+import { useRouter } from "next/router";
+import { useCallback } from "react";
+import { useHotKeys } from "../app/hooks/useHotKeys";
 
 const Block = ({
   children,
@@ -29,6 +33,17 @@ const Block = ({
 };
 
 const Home: NextPage = () => {
+  const router = useRouter();
+  const createNoteHandler = useCallback(async () => {
+    await router.push("/create");
+  }, []);
+
+  useHotKeys({
+    Enter: {
+      handler: createNoteHandler,
+    },
+  });
+
   return (
     <>
       <NextSeo
@@ -48,11 +63,15 @@ const Home: NextPage = () => {
           <Link href="/create" passHref>
             <Button
               as="a"
-              width={["100%", "250px"]}
+              width={["100%", "100%", "auto"]}
+              px={["6", "6", "10"]}
               height={["50px", "60px", "70px"]}
               colorScheme="orange"
               fontSize="xl"
             >
+              <Box as="span" display={["none", "none", "inline-block"]} mr={8}>
+                <Kbd>Ctrl</Kbd> + <Kbd>Enter</Kbd>
+              </Box>
               Create note
             </Button>
           </Link>

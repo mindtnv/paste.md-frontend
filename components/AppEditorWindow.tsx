@@ -19,6 +19,7 @@ import { useAppDispatch } from "../app/hooks/storeHooks";
 import CreateUpdateButton from "./CreateUpdateButton";
 import { saveNote } from "../app/noteSlice";
 import { motion } from "framer-motion";
+import { useHotKeys } from "../app/hooks/useHotKeys";
 
 export interface EditorWindowProps extends ChakraProps {
   actionType: "create" | "update";
@@ -34,40 +35,45 @@ const AppEditorWindow = ({ actionType, ...props }: EditorWindowProps) => {
     if (activeTab === 1) window.scrollTo(0, scrollY);
   }, [activeTab, scrollY]);
 
-  let lockButtons = false;
-  const handleTabSwitch = useCallback(
-    (e: KeyboardEvent) => {
-      const setTab = (tab: number) => {
+  const createChangeTabHandler = useCallback(
+    (tab: number) => {
+      return () => {
         setActiveTab(tab);
         setEditorFocus(tab === 0);
         if (activeTab === 1) {
           setScrollY(window.scrollY);
         }
       };
-      if (e.ctrlKey && !lockButtons) {
-        if (e.key === "e") {
-          setTab(0);
-        } else if (e.key === "p") {
-          setTab(1);
-        } else if (e.key === "h") {
-          setTab(2);
-        } else if (e.key === "i") {
-          setTab(3);
-        } else if (e.key === "s") {
-          dispatch(saveNote());
-          lockButtons = true;
-        } else return;
-
-        e.preventDefault();
-      }
     },
     [activeTab]
   );
 
-  useEffect(() => {
-    window.addEventListener("keydown", handleTabSwitch);
-    return () => window.removeEventListener("keydown", handleTabSwitch);
-  }, [handleTabSwitch]);
+  let saveLocked = false;
+  const saveHandler = useCallback(() => {
+    if (saveLocked) return;
+
+    saveLocked = true;
+    dispatch(saveNote());
+  }, [dispatch]);
+
+  const handleTabSwitch = useHotKeys({
+    e: {
+      handler: createChangeTabHandler(0),
+    },
+    p: {
+      handler: createChangeTabHandler(1),
+    },
+    h: {
+      handler: createChangeTabHandler(2),
+    },
+    i: {
+      handler: createChangeTabHandler(3),
+    },
+    s: {
+      handler: () => saveHandler(),
+      lockTimout: 4000,
+    },
+  });
 
   return (
     <>

@@ -1,5 +1,7 @@
-﻿import { Box, ChakraProps, Heading, Text, useToast } from "@chakra-ui/react";
+﻿import { Box, ChakraProps, Kbd, Text, useToast } from "@chakra-ui/react";
 import { CopyIcon } from "@chakra-ui/icons";
+import { useCallback } from "react";
+import { useHotKeys } from "../app/hooks/useHotKeys";
 
 export interface EditCodeProps extends ChakraProps {
   code: string;
@@ -7,7 +9,23 @@ export interface EditCodeProps extends ChakraProps {
 
 const EditCode = ({ code, ...props }: EditCodeProps) => {
   const toast = useToast();
-
+  const copyHandler = useCallback(() => {
+    navigator.clipboard.writeText(code);
+    toast({
+      title: "Edit code copied to clipboard",
+      status: "success",
+      duration: 1500,
+      isClosable: true,
+    });
+  }, [toast]);
+  useHotKeys({
+    c: {
+      handler: copyHandler,
+    },
+    с: {
+      handler: copyHandler,
+    },
+  });
   return (
     <Box
       borderRadius={5}
@@ -32,18 +50,13 @@ const EditCode = ({ code, ...props }: EditCodeProps) => {
         transition="ease-in"
         transitionProperty="color"
         transitionDuration=".1s"
-        onClick={() => {
-          navigator.clipboard.writeText(code);
-          toast({
-            title: "Copied to clipboard",
-            status: "success",
-            duration: 3000,
-            isClosable: true,
-          });
-        }}
+        onClick={copyHandler}
       >
         <CopyIcon /> {code}
       </Text>
+      <Box as="span" display={["none", "none", "inline-block"]} ml={4}>
+        <Kbd>Ctrl</Kbd> + <Kbd>C</Kbd>
+      </Box>
     </Box>
   );
 };

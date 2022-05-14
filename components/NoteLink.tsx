@@ -7,6 +7,8 @@
   useToast,
 } from "@chakra-ui/react";
 import { CopyIcon } from "@chakra-ui/icons";
+import { useCallback } from "react";
+import { useHotKeys } from "../app/hooks/useHotKeys";
 
 export interface NoteLinkProps extends ChakraProps {
   href: string;
@@ -14,6 +16,23 @@ export interface NoteLinkProps extends ChakraProps {
 
 const NoteLink = ({ href, ...props }: NoteLinkProps) => {
   const toast = useToast();
+  const copyHandler = useCallback(() => {
+    navigator.clipboard.writeText(href);
+    toast({
+      title: "Url copied to clipboard",
+      status: "success",
+      duration: 1500,
+      isClosable: true,
+    });
+  }, [toast]);
+  useHotKeys({
+    d: {
+      handler: copyHandler,
+    },
+    в: {
+      handler: copyHandler,
+    },
+  });
   return (
     <Box
       textAlign="center"
@@ -43,15 +62,7 @@ const NoteLink = ({ href, ...props }: NoteLinkProps) => {
           transition="ease-in"
           transitionProperty="color"
           transitionDuration=".1s"
-          onClick={() => {
-            navigator.clipboard.writeText(href);
-            toast({
-              title: "Copied to clipboard",
-              status: "success",
-              duration: 3000,
-              isClosable: true,
-            });
-          }}
+          onClick={copyHandler}
         >
           {href}
         </Text>
@@ -59,7 +70,7 @@ const NoteLink = ({ href, ...props }: NoteLinkProps) => {
           <Kbd ml={2} mr={1}>
             Ctrl
           </Kbd>
-          +<Kbd ml={1}>C</Kbd>
+          +<Kbd ml={1}>D</Kbd>
         </Box>
       </Text>
     </Box>
