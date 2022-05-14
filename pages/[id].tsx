@@ -1,22 +1,7 @@
-﻿import {
-  Box,
-  Button,
-  Input,
-  Modal,
-  ModalBody,
-  ModalCloseButton,
-  ModalContent,
-  ModalFooter,
-  ModalHeader,
-  ModalOverlay,
-  Skeleton,
-  Spinner,
-  Text,
-  useDisclosure,
-} from "@chakra-ui/react";
+﻿import { Box, Skeleton, useDisclosure } from "@chakra-ui/react";
 import { useRouter } from "next/router";
 import { useAppDispatch, useAppSelector } from "../app/hooks/storeHooks";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect } from "react";
 import NoteViewer from "../components/NoteViewer";
 import NoteLink from "../components/NoteLink";
 import {
@@ -30,23 +15,55 @@ import NoteTitle from "../components/NoteTitle";
 import NotFound from "../components/NotFound";
 import { motion } from "framer-motion";
 import { NextSeo } from "next-seo";
+import EditCodeModal, { OnInvokeArgs } from "../components/EditCodeModal";
 
 const NotePage = () => {
   const router = useRouter();
-  const { id, edit, showLink } = router.query;
   const dispatch = useAppDispatch();
+  const { id, edit, showLink } = router.query;
   const note = useAppSelector((state) => state.note.note);
   const loading = useAppSelector((state) => state.note.loading);
-  const { isOpen, onOpen, onClose } = useDisclosure();
-  const [action, setAction] = useState<"edit" | "delete">("edit");
-  const [errors, setErrors] = useState<string[]>([]);
-  const [validating, setValidating] = useState(false);
-  const [editCode, setEditCode] = useState(edit as string);
+  const editDisclosure = useDisclosure();
+  const deleteDisclosure = useDisclosure();
 
+  const onEdit = useCallback(
+    async (args: OnInvokeArgs) => {
+      args.setLoading(true);
+      const isValid = await validateEditCodeAsync({
+        id: id as string,
+        editCode: args.editCode,
+      });
+      args.setLoading(false);
+      if (isValid) {
+        await router.push(`/edit/${id}?editCode=${args.editCode}`);
+      } else {
+        args.setErrors(["Edit code is not valid"]);
+      }
+    },
+    [router, id]
+  );
+
+  const onDelete = useCallback(
+    async (args: OnInvokeArgs) => {
+      args.setLoading(true);
+      try {
+        await deleteNoteAsync({ id: note.id, editCode: args.editCode });
+        await router.push("/");
+      } catch (_) {
+        args.setErrors(["Edit code is not valid"]);
+      } finally {
+        args.setLoading(false);
+      }
+    },
+    [router, note]
+  );
+
+  // Load Note
   useEffect(() => {
     if (id && typeof id === "string") dispatch(loadNote({ id: id }));
   }, [id, dispatch]);
 
+  // Scroll to Anchor
   useEffect(() => {
     if (note.content !== "" && window.location.hash) {
       const element = document.getElementById(
@@ -100,6 +117,7 @@ const NotePage = () => {
                 <></>
               )}
             </Box>
+
             <Skeleton
               id="viewer"
               isLoaded={loading === "succeeded"}
@@ -116,12 +134,10 @@ const NotePage = () => {
               >
                 <NoteTitle
                   onEdit={() => {
-                    setAction("edit");
-                    onOpen();
+                    editDisclosure.onOpen();
                   }}
                   onDelete={() => {
-                    setAction("delete");
-                    onOpen();
+                    deleteDisclosure.onOpen();
                   }}
                 />
                 {edit ? (
@@ -158,80 +174,24 @@ const NotePage = () => {
         )}
       </Box>
 
-      <Modal isOpen={isOpen} onClose={onClose}>
-        <ModalOverlay />
-        <ModalContent bgColor="#0F111A">
-          <ModalHeader>Enter your edit code</ModalHeader>
-          <ModalCloseButton />
-          <ModalBody>
-            {errors.map((e) => (
-              <Text color="red.300" mb={[2, 4]} key={e}>
-                {e}
-              </Text>
-            ))}
-            <Input
-              value={editCode}
-              onChange={(e) => setEditCode(e.target.value)}
-              colorScheme="orange"
-              autoFocus
-            />
-          </ModalBody>
-          <ModalFooter>
-            <Button
-              colorScheme="orange"
-              variant="ghost"
-              mr={3}
-              onClick={onClose}
-            >
-              Close
-            </Button>
-            <Button
-              variant={action === "edit" ? "ghost" : "solid"}
-              colorScheme={action === "edit" ? "blue" : "red"}
-              onClick={() => {
-                if (action === "edit") {
-                  setValidating(true);
-                  validateEditCodeAsync({
-                    // @ts-ignore
-                    id: id,
-                    editCode,
-                  })
-                    .then((isValid) => {
-                      if (isValid) {
-                        router.push(`/edit/${id}?editCode=${editCode}`);
-                      } else {
-                        setErrors(["Edit code not valid"]);
-                      }
-                    })
-                    .finally(() => {
-                      setValidating(false);
-                    });
-                }
-
-                if (action === "delete") {
-                  setValidating(true);
-                  deleteNoteAsync({ id: note.id, editCode })
-                    .then((r) => {
-                      if (r === true) {
-                        router.push("/");
-                      } else {
-                        setErrors(["Edit code not valid"]);
-                      }
-                    })
-                    .catch(() => {
-                      setErrors(["Edit code not valid"]);
-                    })
-                    .finally(() => {
-                      setValidating(false);
-                    });
-                }
-              }}
-            >
-              {validating ? <Spinner /> : action === "edit" ? "Edit" : "Delete"}
-            </Button>
-          </ModalFooter>
-        </ModalContent>
-      </Modal>
+      {/*Edit Note Modal*/}
+      <EditCodeModal
+        isOpen={editDisclosure.isOpen}
+        onClose={editDisclosure.onClose}
+        initialEditCode={edit as string}
+        buttonText="Edit"
+        buttonColorScheme="orange"
+        onInvoke={(args) => onEdit(args)}
+      />
+      {/*Delete Note Modal*/}
+      <EditCodeModal
+        isOpen={deleteDisclosure.isOpen}
+        onClose={deleteDisclosure.onClose}
+        initialEditCode={edit as string}
+        buttonText="Delete"
+        buttonColorScheme="red"
+        onInvoke={(code) => onDelete(code)}
+      />
     </>
   );
 };

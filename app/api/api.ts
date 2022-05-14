@@ -68,8 +68,7 @@ export const deleteNoteAsync = async ({
   const response = await fetch(`${apiUrl}/note/${id}?editCode=${editCode}`, {
     method: "DELETE",
   });
-  debugger;
-  return response.status === 200;
+  if (response.status !== 200) throw new Error(response.status.toString());
 };
 
 export const loadNoteAsync = async (

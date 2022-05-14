@@ -37,31 +37,33 @@ const NoteTitle = ({ onEdit, onDelete, ...props }: NoteTitleProps) => {
           {title}
         </Box>
       </Box>
-      <Menu autoSelect={false}>
-        <MenuButton
-          as={Button}
-          rightIcon={<ChevronDownIcon />}
-          autoFocus={false}
-        >
-          Actions
-        </MenuButton>
-        <MenuList>
-          <MenuItem
-            onClick={() => {
-              if (onEdit) onEdit();
-            }}
+      <Box>
+        <Menu autoSelect={false} gutter={0}>
+          <MenuButton
+            as={Button}
+            rightIcon={<ChevronDownIcon />}
+            autoFocus={false}
           >
-            <EditIcon mr={2} /> Edit
-          </MenuItem>
-          <MenuItem
-            onClick={() => {
-              if (onDelete) onDelete();
-            }}
-          >
-            <DeleteIcon mr={2} /> Delete
-          </MenuItem>
-        </MenuList>
-      </Menu>
+            Actions
+          </MenuButton>
+          <MenuList margin={0}>
+            <MenuItem
+              onClick={() => {
+                if (onEdit) onEdit();
+              }}
+            >
+              <EditIcon mr={2} /> Edit
+            </MenuItem>
+            <MenuItem
+              onClick={() => {
+                if (onDelete) onDelete();
+              }}
+            >
+              <DeleteIcon mr={2} /> Delete
+            </MenuItem>
+          </MenuList>
+        </Menu>
+      </Box>
     </HStack>
   );
 };
