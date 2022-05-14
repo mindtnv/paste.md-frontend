@@ -1,4 +1,4 @@
-{
+﻿{
   "name": "Paste.md",
   "short_name": "Pastemd",
   "scope": "/",
@@ -15,7 +15,7 @@
       "type": "image/png"
     }
   ],
-  "theme_color": "#ffffff",
+  "theme_color": "#0F111A",
   "background_color": "#0F111A",
   "display": "standalone"
 }

@@ -6,7 +6,10 @@ export default class Document extends NextDocument {
   render() {
     return (
       <Html lang="en">
-        <Head />
+        <Head>
+          <link rel="manifest" href="/manifest.json" />
+          <meta name="theme-color" content="#0F111A" />
+        </Head>
         <body>
           <ColorModeScript initialColorMode={theme.initialColorMode} />
           <Main />
