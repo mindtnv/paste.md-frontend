@@ -28,22 +28,7 @@ const AppNavBar = () => {
       <Container maxW="container.xl">
         <Flex justify="space-between">
           <AppNavBarLogo />
-          <HStack spacing={7} display={{ base: "none", sm: "flex" }}>
-            <AppNavBarLink href="/api">
-              <Button colorScheme="orange">API</Button>
-            </AppNavBarLink>
-          </HStack>
-
-          <Box display={{ base: "inline-block", sm: "none" }}>
-            <Menu isLazy id="navbar-menu">
-              <MenuButton
-                as={IconButton}
-                icon={<HamburgerIcon />}
-                variant="outline"
-              />
-              <MenuList></MenuList>
-            </Menu>
-          </Box>
+          <HStack spacing={7} display={{ base: "none", sm: "flex" }}></HStack>
         </Flex>
       </Container>
     </Box>

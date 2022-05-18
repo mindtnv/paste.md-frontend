@@ -61,11 +61,34 @@
   opacity: 1;
 }
 
+html, body {
+  height: 100% !important;
+  margin: 0px;
+}
+
 @media (max-width: 600px) {
   .cm-gutters {
     display: none !important;
   }
+
   .cm-editor {
     padding-left: 1rem !important;
   }
+
+  .cm-editor {
+    border-radius: 0 !important;
+  }
+
+  *::-webkit-scrollbar {
+    width: 0.25rem !important;
+    height: 0.25rem !important;
+  }
+}
+
+#__next {
+  height: 100% !important;
+}
+
+.cm-theme{
+  height: 100% !important;
 }

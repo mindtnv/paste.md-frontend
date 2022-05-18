@@ -1,5 +1,5 @@
 ﻿import { ReactElement } from "react";
-import { Box, ChakraProps, Container } from "@chakra-ui/react";
+import { Box, ChakraProps, Container, HStack, VStack } from "@chakra-ui/react";
 import AppNavBar from "../AppNavBar";
 import AppFooter from "../AppFooter";
 
@@ -9,10 +9,11 @@ export type AppLayoutProps = {
 
 const AppLayout = ({ children, ...props }: AppLayoutProps) => {
   return (
-    <Box as="main" minH="100vh" position="relative">
+    <Box as="main" height="100vh" position="relative">
       <AppNavBar />
       <Container
-        pb="7rem"
+        height="100%"
+        pb={"7rem"}
         paddingInline={[0, 4]}
         maxW="container.2xl"
         {...props}

@@ -87,7 +87,7 @@ export interface EditorProps extends ChakraProps {
 const Editor = ({
   vimMode,
   onChange,
-  maxH,
+  height,
   onKeyDown,
   onUpdate,
   autoFocus,
@@ -124,11 +124,11 @@ const Editor = ({
   }, [noteContent]);
 
   return (
-    <Box {...props}>
+    <Box height={height} {...props}>
       <ReactCodeMirror
         value={localNoteContent ?? ""}
         autoFocus={autoFocus}
-        height={maxH as string}
+        height={height as string}
         indentWithTab={true}
         extensions={extensions}
         theme={editorTheme}
