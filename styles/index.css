@@ -67,5 +67,11 @@
   }
   .cm-editor {
     padding-left: 1rem !important;
+    border-radius: 0 !important;
+
+  }
+  *::-webkit-scrollbar {
+    width: 0.25rem !important;
+    height: 0.25rem !important;
   }
 }

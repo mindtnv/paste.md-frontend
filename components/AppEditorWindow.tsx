@@ -115,12 +115,6 @@ const AppEditorWindow = ({ actionType, ...props }: EditorWindowProps) => {
             </Box>
           </Tab>
           <Tab>
-            Instruction
-            <Box display={["none", "none", "block"]}>
-              <Kbd ml={2}>Ctrl</Kbd> + <Kbd>H</Kbd>
-            </Box>
-          </Tab>
-          <Tab>
             Settings
             <Box display={["none", "none", "block"]}>
               <Kbd ml={2}>Ctrl</Kbd> + <Kbd>I</Kbd>
@@ -172,9 +166,6 @@ const AppEditorWindow = ({ actionType, ...props }: EditorWindowProps) => {
                 py={["1.5rem", "2rem", "3rem"]}
               />
             </NoSsr>
-          </TabPanel>
-          <TabPanel p={0} py={[0, 6]} w="100%" overflow="auto">
-            Instruction
           </TabPanel>
           <TabPanel p={0} py={[0, 6]} w="100%" overflow="auto">
             <Box mt={8} px={4}>

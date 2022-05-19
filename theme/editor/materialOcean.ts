@@ -30,8 +30,6 @@ export const materialOceanTheme = EditorView.baseTheme({
     borderRadius: "5px",
   },
   ".cm-gutters": {
-    borderTopLeftRadius: "6px",
-    borderBottomLeftRadius: "6px",
     background: "#0F111A",
     color: "#464B5D",
     border: "none",
