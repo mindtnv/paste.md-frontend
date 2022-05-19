@@ -101,20 +101,20 @@ const AppEditorWindow = ({ actionType, ...props }: EditorWindowProps) => {
         // @ts-ignore
         onKeyDown={handleTabSwitch}
       >
-        <TabList pt={[6, 0]}>
-          <Tab>
+        <TabList>
+          <Tab pt={3}>
             Editor
             <Box display={["none", "none", "block"]}>
               <Kbd ml={2}>Ctrl</Kbd> + <Kbd>E</Kbd>
             </Box>
           </Tab>
-          <Tab>
+          <Tab pt={3}>
             Preview
             <Box display={["none", "none", "block"]}>
               <Kbd ml={2}>Ctrl</Kbd> + <Kbd>P</Kbd>
             </Box>
           </Tab>
-          <Tab>
+          <Tab pt={3}>
             Settings
             <Box display={["none", "none", "block"]}>
               <Kbd ml={2}>Ctrl</Kbd> + <Kbd>I</Kbd>
