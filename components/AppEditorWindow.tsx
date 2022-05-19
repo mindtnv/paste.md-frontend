@@ -9,7 +9,6 @@
   TabPanel,
   TabPanels,
   Tabs,
-  VStack,
 } from "@chakra-ui/react";
 import React, { useCallback, useEffect, useState } from "react";
 import NoSsr from "./NoSsr";
@@ -31,7 +30,6 @@ const AppEditorWindow = ({ actionType, ...props }: EditorWindowProps) => {
   const [editorFocus, setEditorFocus] = useState(true);
   const [scrollY, setScrollY] = useState(0);
   const dispatch = useAppDispatch();
-  // const editorHeight = useBreakpointValue({base: })
 
   useEffect(() => {
     if (activeTab === 1) window.scrollTo(0, scrollY);
@@ -103,20 +101,26 @@ const AppEditorWindow = ({ actionType, ...props }: EditorWindowProps) => {
         // @ts-ignore
         onKeyDown={handleTabSwitch}
       >
-        <TabList>
-          <Tab pt={3}>
+        <TabList pt={[6, 0]}>
+          <Tab>
             Editor
             <Box display={["none", "none", "block"]}>
               <Kbd ml={2}>Ctrl</Kbd> + <Kbd>E</Kbd>
             </Box>
           </Tab>
-          <Tab pt={3}>
+          <Tab>
             Preview
             <Box display={["none", "none", "block"]}>
               <Kbd ml={2}>Ctrl</Kbd> + <Kbd>P</Kbd>
             </Box>
           </Tab>
-          <Tab pt={3}>
+          <Tab>
+            Instruction
+            <Box display={["none", "none", "block"]}>
+              <Kbd ml={2}>Ctrl</Kbd> + <Kbd>H</Kbd>
+            </Box>
+          </Tab>
+          <Tab>
             Settings
             <Box display={["none", "none", "block"]}>
               <Kbd ml={2}>Ctrl</Kbd> + <Kbd>I</Kbd>
@@ -127,33 +131,30 @@ const AppEditorWindow = ({ actionType, ...props }: EditorWindowProps) => {
           <TabPanel p={0} py={[0, 6]} height="100%">
             <NoSsr>
               <motion.div
-                style={{ height: "100%" }}
                 animate={{ opacity: [0, 1] }}
                 transition={{
                   default: { duration: 0.3 },
                 }}
               >
-                <VStack
-                  alignItems="stretch"
-                  justifyContent="space-between"
-                  height="100%"
-                  pb={[2, 4, 6]}
-                  bgColor="#0F111A"
-                >
-                  <VimEditor
-                    autoFocus={editorFocus}
-                    onKeyDown={handleTabSwitch}
-                    fontSize={[25, 30, 30]}
-                    height="100%"
-                    pb={[2, 4, 6]}
+                <VimEditor
+                  autoFocus={editorFocus}
+                  onKeyDown={handleTabSwitch}
+                  fontSize={[25, 30, 30]}
+                  maxH="75vh"
+                />
+              </motion.div>
+              <motion.div
+                animate={{ opacity: [0, 1] }}
+                transition={{
+                  default: { duration: 0.3 },
+                }}
+              >
+                <HStack mt={[10, 8]} justifyContent="flex-end" px={2}>
+                  <CreateUpdateButton
+                    actionType={actionType}
+                    onClick={() => dispatch(saveNote())}
                   />
-                  <HStack justifyContent="flex-end" px={[2, 4, 6]}>
-                    <CreateUpdateButton
-                      actionType={actionType}
-                      onClick={() => dispatch(saveNote())}
-                    />
-                  </HStack>
-                </VStack>
+                </HStack>
               </motion.div>
             </NoSsr>
           </TabPanel>
@@ -172,7 +173,9 @@ const AppEditorWindow = ({ actionType, ...props }: EditorWindowProps) => {
               />
             </NoSsr>
           </TabPanel>
-
+          <TabPanel p={0} py={[0, 6]} w="100%" overflow="auto">
+            Instruction
+          </TabPanel>
           <TabPanel p={0} py={[0, 6]} w="100%" overflow="auto">
             <Box mt={8} px={4}>
               <Heading mb={4}>Vim settings</Heading>

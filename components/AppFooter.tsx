@@ -9,7 +9,8 @@ const AppFooter = () => {
       py={5}
       css={{ backdropFilter: "blur(8px)" }}
       zIndex={10}
-      // bottom={0}
+      bottom={0}
+      position="absolute"
     >
       <Container maxW="container.lg">
         <Text align="center">

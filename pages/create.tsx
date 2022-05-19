@@ -41,7 +41,7 @@ const CreatePage = () => {
         title="Paste.md | Create"
         description="Pastemd. Service for anonymous creating and sharing markdown files."
       />
-      <AppEditorWindow height="100%" pt={[0, 4, 6]} actionType="create" />
+      <AppEditorWindow pt={[0, 4, 6]} actionType="create" />
     </>
   );
 };
