@@ -66,20 +66,14 @@ const AppEditorWindow = ({ actionType, ...props }: EditorWindowProps) => {
     p: {
       handler: createChangeTabHandler(1),
     },
-    з: {
+    ш: {
       handler: createChangeTabHandler(1),
     },
-    h: {
+    i: {
       handler: createChangeTabHandler(2),
     },
     р: {
       handler: createChangeTabHandler(2),
-    },
-    i: {
-      handler: createChangeTabHandler(3),
-    },
-    ш: {
-      handler: createChangeTabHandler(3),
     },
     s: {
       handler: () => saveHandler(),

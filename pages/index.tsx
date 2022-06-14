@@ -87,12 +87,10 @@ const Home: NextPage = () => {
           </Text>
           <Divider my={10} />
           <Heading as="h2" fontSize={["2xl", "3xl"]} my={[8, 10]}>
-            API
+            Full anonymous
           </Heading>
           <Text mb={8} fontSize={["xl", "2xl"]}>
-            <strong>Open API</strong> - service for anonymous creating and
-            sharing markdown files. There is beautiful markdown editor and{" "}
-            <strong>VIM mode</strong>!
+            Create and share notes anonymously
           </Text>
         </Block>
       </Box>
