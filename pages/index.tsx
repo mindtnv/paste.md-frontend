@@ -51,7 +51,7 @@ const Home: NextPage = () => {
         description="Pastemd. Service for anonymous creating and sharing markdown files."
       />
       <Box px={6} h="100%" mx="auto" maxW="container.lg">
-        <Block mt={[14, 24]} delay={0.1}>
+        <Box mt={[14, 24]}>
           <Heading as="h1" fontSize={["3xl", "4xl"]} mb={[8, 12]}>
             Paste.md - improved paste.bin for markdown
           </Heading>
@@ -75,9 +75,9 @@ const Home: NextPage = () => {
               Create note
             </Button>
           </Link>
-        </Block>
+        </Box>
         <Divider my={10} />
-        <Block delay={0.2}>
+        <Box>
           <Heading as="h2" fontSize={["2xl", "3xl"]} my={[8, 10]}>
             Vim mode
           </Heading>
@@ -92,7 +92,7 @@ const Home: NextPage = () => {
           <Text mb={8} fontSize={["xl", "2xl"]}>
             Create and share notes anonymously
           </Text>
-        </Block>
+        </Box>
       </Box>
     </>
   );
