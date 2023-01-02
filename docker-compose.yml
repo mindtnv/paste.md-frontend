@@ -1,4 +1,4 @@
-﻿version: "3.7"
+version: "3.7"
 
 networks:
   traefik-public:
@@ -6,7 +6,7 @@ networks:
 
 services:
   pastemd-frontend:
-    image: registry.dev.zldk.su/pastemd-frontend
+    image: registry.dev.gbms.site/pastemd-frontend
     networks:
       - traefik-public
 
