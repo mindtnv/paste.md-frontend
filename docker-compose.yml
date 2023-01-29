@@ -6,7 +6,7 @@ networks:
 
 services:
   pastemd-frontend:
-    image: registry.dev.gbms.site/pastemd-frontend
+    image: registry.dev.gbms.site/pastemd-frontend:latest
     networks:
       - traefik-public
 
