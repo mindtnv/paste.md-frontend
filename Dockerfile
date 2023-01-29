@@ -9,7 +9,7 @@ FROM node:alpine AS builder
 WORKDIR /app
 COPY . .
 COPY --from=deps /app/node_modules ./node_modules
-ARG NODE_ENV=production
+ARG NODE_ENV=devolpement
 RUN echo ${NODE_ENV}
 RUN NODE_ENV=${NODE_ENV} NEXT_PUBLIC_API_URL="https://api.pastemd.gbms.site" NEXT_PUBLIC_BASE_URL="https://pastemd.gbms.site" yarn build
 
